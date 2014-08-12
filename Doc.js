@@ -3,6 +3,11 @@
 // --------------- Constructor -------------
 
 Uni.Class.Doc = function UniDoc(doc, collection, col) {
+    // collection2 broke this part again. :(
+
+    // we need to rewrite this to one class = one collection
+    // so we can store collection it prototype.
+
     this._collection = collection;
     this._col = col;
     _.extend(this, doc);
@@ -104,29 +109,29 @@ Uni.Class.Doc.prototype.update = function (modifier, options, callback) {
     return Uni.updateDoc(this, modifier, options, callback);
 };
 
-//_([
-//    '$inc',
-//    '$mul',
-//    '$rename',
-//    '$setOnInsert',
-//    '$set',
-//    '$unset',
-//    '$min',
-//    '$max',
-//    '$currentDate',
-//    '$addToSet',
-//    '$pop',
-//    '$pullAll',
-//    '$pull',
-//    '$push'
-//]).each(function(operator) {
-//    Uni.Class.Doc.prototype[operator] = function(setObj, options, callback) {
-//        var mod = {};
-//        setObj = setObj || {};
-//        mod[operator] = setObj;
-//        return this.update(mod, options, callback);
-//    };
-//});
+_([
+    '$inc',
+    '$mul',
+    '$rename',
+    '$setOnInsert',
+    '$set',
+    '$unset',
+    '$min',
+    '$max',
+    '$currentDate',
+    '$addToSet',
+    '$pop',
+    '$pullAll',
+    '$pull',
+    '$push'
+]).each(function(operator) {
+    Uni.Class.Doc.prototype[operator] = function(setObj, options, callback) {
+        var mod = {};
+        setObj = setObj || {};
+        mod[operator] = setObj;
+        return this.update(mod, options, callback);
+    };
+});
 
 Uni.Class.Doc.prototype.remove = function(callback) {
     return Uni.removeDoc(this, callback);

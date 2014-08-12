@@ -5,7 +5,8 @@ Package.describe({
 Package.on_use(function (api) {
     api.use([
         'underscore',
-        'collection2'
+        'collection2',
+        'ejson'
     ]);
 
     api.add_files([
