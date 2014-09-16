@@ -6,7 +6,7 @@ Package.describe({
 Package.on_use(function (api) {
     api.use([
         'underscore',
-        'collection2',
+        'aldeed:collection2',
         'ejson'
     ]);
 
