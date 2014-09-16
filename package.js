@@ -1,5 +1,6 @@
 Package.describe({
-    summary: 'Universe CMS Core package'
+    summary: 'Universe CMS Core package',
+    name: 'vazco:universe-core'
 });
 
 Package.on_use(function (api) {
