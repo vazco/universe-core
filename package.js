@@ -5,24 +5,14 @@ Package.describe({
 
 Package.on_use(function (api) {
     api.use([
-        'underscore',
-        'aldeed:collection2',
-        'ejson'
+        'underscore'
     ]);
 
     api.add_files([
-        'Universe.js',
-        'UniId.js',
-        'Doc.js',
-        'Col.js',
-        'collections.js',
-        'docMethods.js',
-        'relations.js',
-        'utils.js',
-        'wrappers.js'
+        'UniDoc.js'
     ]);
 
     api.export([
-        'Uni'
+        'UniDoc'
     ]);
 });

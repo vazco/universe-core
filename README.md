@@ -1,3 +1,8 @@
+
+# ** DEPRECATED **
+
+
+
 ## Plugin creation tutorial
 
 **Check universe-news and universe-chat (and add-ons to them) for example.**
@@ -136,15 +141,15 @@ Let's start with example:
 
 ```
 // methods inheritance:
-Uni.Class.Animal = Uni.Class.Object.extend({
+Uni.Animal = Uni.Object.extend({
     howManyLegs: function (){
         return this.legsCount;
     }
 });
 
 // simpleSchema inheritance:
-Uni.Class.Animal.schema = new SimpleSchema([
-    Uni.Class.Object.schema, // <- this is our base schema
+Uni.Animal.schema = new SimpleSchema([
+    Uni.Object.schema, // <- this is our base schema
     
     // below are the new, animal specific fields.
     {
@@ -162,7 +167,7 @@ Now we got basic animal class like structure. We use simpleSchema to define fiel
 Lets inherit some more and actually add it to our plugin.
 
 ```
-Uni.Class.Cow = Uni.Class.Animal.extend({
+Uni.Cow = Uni.Animal.extend({
     sayMuu: function (){
         console.log('muu');
     },
@@ -173,8 +178,8 @@ Uni.Class.Cow = Uni.Class.Animal.extend({
     }
 });
 
-Uni.Class.Cow.schema = new SimpleSchema([
-    Uni.Class.Animal.schema, // <- this is our base animal schema
+Uni.Cow.schema = new SimpleSchema([
+    Uni.Animal.schema, // <- this is our base animal schema
     {
         horns: {
             type: Boolean
@@ -187,12 +192,7 @@ UniAnimals.removeCollection('cows');
 
 // And add our new cows with horns and stuff.
 UniAnimals.addCollection('cows',{
-    constructor: Uni.Class.Cow,
-    schema: Uni.Class.Cow.schema // <- this is optional if constructor is set
+    constructor: Uni.Cow,
+    schema: Uni.Cow.schema // <- this is optional if constructor is set
 });
 ```
-
-###Relations
-
-To be continued...
-

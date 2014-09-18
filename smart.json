@@ -1,7 +1,0 @@
-{
-    "name": "Universe Core",
-    "git": "git@bitbucket.org:vazco/universe-core.git",
-    "packages": {
-        "collection2": {}
-    }
-}
