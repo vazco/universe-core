@@ -8,19 +8,20 @@ UniDoc = (function () {
     };
 
     UniDoc.create = function (doc) {
-        var id = this._collection.insert(doc);
         doc = this.init(doc);
-        doc._id = id;
+        doc._id = this.insert(doc);
         return doc;
     };
 
     UniDoc.insert = function (doc, cb) {
-        return this._collection.insert(doc, cb);
+        return this.collection.insert(doc, cb);
     };
 
     UniDoc._addTransform = function (options) {
         var self = this;
         if (options.transform !== null) {
+
+            //TODO: optimize this. now we create function for every find.
             options.transform = function (doc) {
                 return self.init(doc);
             }
@@ -28,40 +29,39 @@ UniDoc = (function () {
     };
 
     UniDoc.find = function (selector, options) {
+        selector = selector || {};
         options = options || {};
         this._addTransform(options);
 
-        return this._collection.find(selector, options);
+        return this.collection.find(selector, options);
     };
 
     UniDoc.findOne = function (selector, options) {
+        selector = selector || {};
         options = options || {};
         this._addTransform(options);
 
-        return this._collection.findOne(selector, options);
+        return this.collection.findOne(selector, options);
     };
 
     UniDoc.update = function (selector, modifier, options, cb) {
-        return this._collection.update(selector, modifier, options, cb);
+        return this.collection.update(selector, modifier, options, cb);
     };
 
     UniDoc.remove = function (selector, cb) {
-        return this._collection.remove(selector, cb);
+        return this.collection.remove(selector, cb);
     };
 
     UniDoc.prototype.update = function (modifier, options, cb) {
-        return this.constructor.update(this.id, modifier, options, cb);
+        return this.constructor.update(this._id, modifier, options, cb);
     };
 
     UniDoc.prototype.remove = function () {
-        if (this.id) {
-            this.constructor.remove(this.id);
-            this.id = undefined;
-        }
+        this.constructor.remove(this._id);
     };
 
     UniDoc.prototype.reload = function () {
-        return this.constructor.findOne(this.id);
+        return this.constructor.findOne(this._id);
     };
 
     _([
@@ -74,6 +74,7 @@ UniDoc = (function () {
         'push'
     ]).each(function (operator) {
         UniDoc.prototype[operator] = function (setObj, options, callback) {
+            operator = '$' + operator;
             var mod = {};
             setObj = setObj || {};
             mod[operator] = setObj;
