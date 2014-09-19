@@ -1,17 +1,24 @@
 _UniUsers = function(){
     var self = this;
-    self.Document = function(doc) { return _.extend(this, doc); };
-    self._transform = function(doc) { return new self.Document(doc); };
-
+    this._helpers = {};
+    this.setDoc = function(doc){
+        this._docModel = doc;
+        this._transform = function(doc){
+            doc = self._docModel(doc);
+            doc.getCollection = function() { return self; };
+            _.each(self._helpers, function(helper, key) {
+                doc[key] = helper;
+            });
+            return doc;
+        };
+    };
+    this.setDoc(UniDoc);
     this.helpers = function(helpers) {
+        var self = this;
         _.each(helpers, function(helper, key) {
-            self.Document.prototype[key] = helper;
+            self._helpers[key] = helper;
         });
-    }
-
-    this.helpers(_.extend({getCollection: function(){
-        return Meteor.users;
-    }}, UniDoc));
+    };
 
     if(_.isObject(Meteor.users)){
         for(k in Object.getOwnPropertyNames(Meteor.users)){
@@ -46,6 +53,7 @@ _UniUsers = function(){
 };
 
 UniUsers = new _UniUsers();
+
 
 
 

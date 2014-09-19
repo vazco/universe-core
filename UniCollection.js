@@ -39,7 +39,9 @@ UniCollection.prototype.setDoc = function(doc){
     this._transform = function(doc){
         doc = self._docModel(doc);
         doc.getCollection = function() { return self; };
-        _.extend(doc, this._helpers);
+        _.each(self._helpers, function(helper, key) {
+            doc[key] = helper;
+        });
         return doc;
     };
 };
