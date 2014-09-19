@@ -6,15 +6,17 @@ Package.describe({
 Package.on_use(function (api) {
     api.use([
         'underscore'
-    ]);
+    ], ['client', 'server']);
 
     api.add_files([
         'UniDoc.js',
+        'UniCollection.js',
         'UniUser.js'
     ]);
 
     api.export([
+        'UniCollection',
         'UniDoc',
-        'UniUser'
+        'UniUsers'
     ]);
 });

@@ -1,34 +1,23 @@
 UniCollection = function(){
-    var params = _.toArray(arguments);
+    Meteor.Collection.apply(this, arguments);
+    var self = this;
 
-    if(params.length > 1){
-        if(_.isObject(params[1])){
-            params[1].transform = UniDoc.init;
-        } else {
-            throw new Meteor.Error(404, 'Missing params?');
-        }
+    self.Document = function(doc) { return _.extend(this, doc); };
+    self._transform = function(doc) { return new self.Document(doc); };
 
-    } else{
-        params.push({
-            transform: UniDoc.init
-        });
-    }
-    Mongo.Collection.apply(this, params);
-
-    var Document = [];
     this.helpers = function(helpers) {
-        var self = this;
-
-        if (! self._hasCollectionHelpers) {
-            Document[self._name] = function(doc) { return _.extend(this, doc); };
-            self._transform = function(doc) { return new Document[self._name](UniDoc.init(doc)); };
-            self._hasCollectionHelpers = true;
-        }
-
         _.each(helpers, function(helper, key) {
-            Document[self._name].prototype[key] = helper;
+            self.Document.prototype[key] = helper;
         });
     }
+
+    this.helpers(_.extend({getCollection: function(){
+        return self;
+    }}, UniDoc));
+
 };
 
-UniCollection.prototype = Mongo.Collection.prototype;
+
+var UniCollectionPrototype = function(){ this.constructor = UniCollection; };
+UniCollectionPrototype.prototype = Meteor.Collection.prototype;
+UniCollection.prototype = new UniCollectionPrototype;
