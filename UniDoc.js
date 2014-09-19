@@ -7,11 +7,8 @@ UniDoc = {
     },
     save: function(){
     var keys = this.getCollection().simpleSchema().objectKeys();
-    var doc = {};
-    _.each(keys, function(k){
-        doc[k] = this[k];
-
-    });
+    var doc = _.pick(this, keys);
+        console.log(doc, this);
         return this.update({$set: doc});
     }
 };
