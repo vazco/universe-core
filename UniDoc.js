@@ -74,10 +74,9 @@ UniDoc = (function () {
         'push'
     ]).each(function (operator) {
         UniDoc.prototype[operator] = function (setObj, options, callback) {
-            operator = '$' + operator;
             var mod = {};
             setObj = setObj || {};
-            mod[operator] = setObj;
+            mod['$' + operator] = setObj;
             return this.update(mod, options, callback);
         };
     });

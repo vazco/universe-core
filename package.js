@@ -9,10 +9,12 @@ Package.on_use(function (api) {
     ]);
 
     api.add_files([
-        'UniDoc.js'
+        'UniDoc.js',
+        'UniUser.js'
     ]);
 
     api.export([
-        'UniDoc'
+        'UniDoc',
+        'UniUser'
     ]);
 });
