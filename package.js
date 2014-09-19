@@ -5,7 +5,8 @@ Package.describe({
 
 Package.on_use(function (api) {
     api.use([
-        'underscore'
+        'underscore',
+        'aldeed:simple-schema'
     ], ['client', 'server']);
 
     api.add_files([

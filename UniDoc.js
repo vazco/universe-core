@@ -6,6 +6,12 @@ UniDoc = {
         return this.getCollection().remove(this._id, cb);
     },
     save: function(){
-        return this.update({$set: this});
+    var keys = this.getCollection().simpleSchema().objectKeys();
+    var doc = {};
+    _.each(keys, function(k){
+        doc[k] = this[k];
+
+    });
+        return this.update({$set: doc});
     }
 };
