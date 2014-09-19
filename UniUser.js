@@ -6,5 +6,8 @@ UniUser = UniDoc.extend({
 }, {
     getName: function () {
         return this.profile.name;
+    },
+    isMe: function () {
+        return this._id === Meteor.userId();
     }
 });
