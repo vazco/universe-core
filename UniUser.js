@@ -4,7 +4,7 @@ _UniUsers = function(){
     this.setDoc = function(doc){
         this._docModel = doc;
         this._transform = function(doc){
-            doc = self._docModel(doc);
+            self._docModel(doc);
             doc.getCollection = function() { return self; };
             _.each(self._docHelpers, function(helper, key) {
                 doc[key] = helper;
@@ -48,7 +48,7 @@ _UniUsers = function(){
 
     this.current = function(){
         var id = Meteor.userId();
-       return id? this.findOne(id): null;
+        return id? this.findOne(id): null;
     }
 };
 
