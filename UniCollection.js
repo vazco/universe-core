@@ -27,14 +27,11 @@ UniCollection.prototype._checkModel = function(docModel){
 UniCollection.prototype.setDocConstructor = function(docModel){
     var self = this;
     this._checkModel(docModel);
-
     this._docModel = docModel;
     this._transform = function(doc){
         self._docModel(doc);
         doc.getCollection = self.getCollection;
-        _.each(self._docHelpers, function(helper, key) {
-            doc[key] = helper;
-        });
+        _.extend(doc, self._docHelpers);
         return doc;
     };
 };

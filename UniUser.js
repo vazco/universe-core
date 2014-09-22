@@ -6,9 +6,7 @@ _UniUsers = function(){
         this._transform = function(doc){
             self._docModel(doc);
             doc.getCollection = function() { return self; };
-            _.each(self._docHelpers, function(helper, key) {
-                doc[key] = helper;
-            });
+            _.extend(doc, self._docHelpers);
             return doc;
         };
     };
