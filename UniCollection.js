@@ -12,6 +12,7 @@ UniCollection = function(){
 var UniCollectionPrototype = function(){ this.constructor = UniCollection; };
 UniCollectionPrototype.prototype = Meteor.Collection.prototype;
 UniCollection.prototype = new UniCollectionPrototype;
+
 UniCollection.prototype._checkModel = function(docModel){
     var docObject = docModel({});
     if(_.isObject(docObject)){
@@ -34,9 +35,6 @@ UniCollection.prototype.setDoc = function(docModel){
     this._transform = function(doc){
         self._docModel(doc);
         doc.getCollection = self.getCollection;
-        _.each(self._docHelpers, function(helper, key) {
-            doc[key] = helper;
-        });
         return doc;
     };
 };
