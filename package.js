@@ -15,11 +15,11 @@ Package.on_use(function (api) {
         'UniDoc.js',
         'UniCollection.js',
         'UniUser.js'
-    ]);
+    ],  ['client', 'server']);
 
     api.export([
         'UniCollection',
         'UniDoc',
         'UniUsers'
-    ]);
+    ],  ['client', 'server']);
 });
