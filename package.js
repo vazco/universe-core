@@ -12,8 +12,9 @@ Package.on_use(function (api) {
     api.use(['matb33:collection-hooks'], ['client', 'server'], {weak: true});
 
     api.add_files([
-        'UniDoc.js',
+        'UniDocBuilder.js',
         'UniCollection.js',
+        'UniUserBuilder.js',
         'UniUser.js'
     ],  ['client', 'server']);
 
