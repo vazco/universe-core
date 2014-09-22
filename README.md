@@ -26,7 +26,7 @@ UniBook = function(doc){
     }
 };
 
-UniBook = _.compose(UniBook, UniDoc);
+UniBook = _.compose(UniBook, UniDocBuilder);
 
 Colls.Books.setBuilder(UniBook);
 ```
@@ -56,7 +56,7 @@ UniUser = function(doc){
     }
 };
 
-UniUser = _.compose(UniUser, UniDoc);
+UniUser = _.compose(UniUser, UniDocBuilder);
 Colls.Books.setBuilder(UniUser);
 ```
 
