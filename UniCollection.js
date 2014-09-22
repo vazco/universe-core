@@ -6,7 +6,7 @@ UniCollection = function(){
     this.getCollection = function() { return self; };
     
     this._docHelpers = {};
-    this.setDoc(UniDoc);
+    this.setDocConstructor(UniDoc);
 };
 
 var UniCollectionPrototype = function(){ this.constructor = UniCollection; };
@@ -24,7 +24,7 @@ UniCollection.prototype._checkModel = function(docModel){
     }
 };
 
-UniCollection.prototype.setDoc = function(docModel){
+UniCollection.prototype.setDocConstructor = function(docModel){
     var self = this;
     this._checkModel(docModel);
 

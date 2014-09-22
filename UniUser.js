@@ -1,18 +1,18 @@
 _UniUsers = function(){
     var self = this;
     this._docHelpers = {};
-    this.setDoc = function(doc){
+    this.setDocConstructor = function(doc){
         this._docModel = doc;
+        _.each(self._docHelpers, function(helper, key) {
+            doc[key] = helper;
+        });
         this._transform = function(doc){
             self._docModel(doc);
             doc.getCollection = function() { return self; };
-            _.each(self._docHelpers, function(helper, key) {
-                doc[key] = helper;
-            });
             return doc;
         };
     };
-    this.setDoc(UniDoc);
+    this.setDocConstructor(UniDoc);
     this.helpers = function(helpers) {
         var self = this;
         _.each(helpers, function(helper, key) {
