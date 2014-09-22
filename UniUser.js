@@ -3,12 +3,12 @@ _UniUsers = function(){
     this._docHelpers = {};
     this.setDocConstructor = function(doc){
         this._docModel = doc;
-        _.each(self._docHelpers, function(helper, key) {
-            doc[key] = helper;
-        });
         this._transform = function(doc){
             self._docModel(doc);
             doc.getCollection = function() { return self; };
+            _.each(self._docHelpers, function(helper, key) {
+                doc[key] = helper;
+            });
             return doc;
         };
     };

@@ -29,12 +29,12 @@ UniCollection.prototype.setDocConstructor = function(docModel){
     this._checkModel(docModel);
 
     this._docModel = docModel;
-    _.each(self._docHelpers, function(helper, key) {
-        doc[key] = helper;
-    });
     this._transform = function(doc){
         self._docModel(doc);
         doc.getCollection = self.getCollection;
+        _.each(self._docHelpers, function(helper, key) {
+            doc[key] = helper;
+        });
         return doc;
     };
 };
