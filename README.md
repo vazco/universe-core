@@ -28,7 +28,7 @@ UniBook = function(doc){
 
 UniBook = _.compose(UniBook, UniDoc);
 
-Colls.Books.setDoc(UniBook);
+Colls.Books.setBuilder(UniBook);
 ```
 
 lub
@@ -57,7 +57,7 @@ UniUser = function(doc){
 };
 
 UniUser = _.compose(UniUser, UniDoc);
-Colls.Books.setDoc(UniUser);
+Colls.Books.setBuilder(UniUser);
 ```
 
 lub
