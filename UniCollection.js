@@ -11,7 +11,7 @@ UniCollection = function(){
 
 var UniCollectionPrototype = function(){ this.constructor = UniCollection; };
 UniCollectionPrototype.prototype = Meteor.Collection.prototype;
-UniCollection.prototype = new UniCollectionPrototype;
+UniCollection.prototype = new UniCollectionPrototype();
 
 UniCollection.prototype._checkModel = function(docModel){
     var docObject = docModel({});
