@@ -10,7 +10,7 @@ _UniUsers = function(){
             return doc;
         };
     };
-    this.setDocConstructor(UniDoc);
+    this.setDocConstructor(UniUserBuilder);
     this.helpers = function(helpers) {
         var self = this;
         _.each(helpers, function(helper, key) {
