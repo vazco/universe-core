@@ -37,3 +37,14 @@ UniUsers.setBuilder = UniCollection.prototype.setBuilder;
 UniUsers.helpers = UniCollection.prototype.helpers;
 
 UniUsers.setBuilder(UniUserBuilder);
+
+UniUsers.current = function(){
+    return UniUsers.findOne(Meteor.userId());
+};
+
+UniUsers.currentId = function(){
+    var user = this.current();
+    if(user){
+        return user._id;
+    }
+};
