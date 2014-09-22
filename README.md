@@ -1,32 +1,3 @@
-Universe collections
-
-Colls.Books = new UniCollection('Books');
-
-UniBook = function(doc){
-    doc.read = function(){
-        this.isReaded = true;
-    }
-    return doc;
-};
-
-UniBook = _.compose(UniBook, UniDoc);
-
-Colls.Books.setDoc(UniBook);
-
-or
-
-Colls.Books.helpers({read: function(){
-    this.isReaded = true;
-}});
-
-You can also use it on our pseudo collection of users
-
-UniUsers.helpers({getName: function(){
-   return this.profile.name;
-}});
-
-
-///////////////Robocza wersja tz. kopia z pull requesta/////////////
 Użycie:
 To zmieniamy 
 ```
@@ -35,7 +6,7 @@ To zmieniamy
 Colls.Books = new Mongo.Collection('Books');
 ```
 
-na
+na to
 ```
 #!javascript
 
@@ -51,8 +22,8 @@ Rozszerzanie standardowego dokumentu:
 UniBook = function(doc){
     doc.read = function(){
         this.isReaded = true;
+        this.save();
     }
-    return doc;
 };
 
 UniBook = _.compose(UniBook, UniDoc);
@@ -68,11 +39,13 @@ lub
 
 Colls.Books.helpers({read: function(){
     this.isReaded = true;
+     this.save();
 }});
 ```
 
 
-Możemy też tak samo dodawać to na naszej pseudo kolekcji userów:
+Możemy też tak samo dodawać na naszej pseudo kolekcji userów:
+(Pisze pseudo kolekcja gdyż z tego obiektu mamy dostęp tylko do metod kolekcji userów i paru dodatkowych funkcji jak current)
 
 ```
 #!javascript
@@ -81,7 +54,6 @@ UniUser = function(doc){
     doc.getName = function(){
         return doc.profile.name;
     }
-    return doc;
 };
 
 UniUser = _.compose(UniUser, UniDoc);
@@ -113,7 +85,7 @@ czy:
 UniUsers.findOne().getName();
 ```
 
-W standardzie mamy takie zabawki jak update z dokumentu czy np save:
+W standardzie mamy takie zabawki jak update z dokumentu, refresh danych czy np save:
 
 
 ```
@@ -123,4 +95,3 @@ var book = Colls.Books.findOne('zkkfN4Tr4Xm85fGpn');
 book.title = 'Nowy T';
 book.save();
 ```
-
