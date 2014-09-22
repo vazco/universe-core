@@ -30,3 +30,10 @@ UniCollection.prototype.helpers = function(helpers) {
         self._docHelpers[key] = helper;
     });
 };
+
+UniUsers = Object.create(Meteor.users);
+
+UniUsers.setBuilder = UniCollection.prototype.setBuilder;
+UniUsers.helpers = UniCollection.prototype.helpers;
+
+UniUsers.setBuilder(UniUserBuilder);

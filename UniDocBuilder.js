@@ -3,6 +3,22 @@ UniDocBuilder = function (doc) {
     doc.update = function (modifier, options, cb) {
         return self.update(this._id, modifier, options, cb);
     };
+    _([
+        'inc',
+        'set',
+        'unset',
+        'addToSet',
+        'pop',
+        'pull',
+        'push'
+    ]).each(function (operator) {
+        doc[operator] = function (setObj, options, callback) {
+            var mod = {};
+            setObj = setObj || {};
+            mod['$' + operator] = setObj;
+            return doc.update(mod, options, callback);
+        };
+    });
     doc.remove = function (cb) {
         return self.remove(this._id, cb);
     };
