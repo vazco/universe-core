@@ -2,9 +2,8 @@ UniCollection = function(){
     'use strict';
     var self = this;
     Meteor.Collection.apply(this, arguments);
-    
+
     this.getCollection = function() { return self; };
-    
     this._docHelpers = {};
     this.setBuilder(UniDocBuilder);
 };
@@ -18,7 +17,7 @@ UniCollection.prototype.setBuilder = function(docBuilder){
     this._docBuilder = docBuilder;
     this._transform = function(doc){
         self._docBuilder(doc);
-        doc.getCollection = self.getCollection;
+        doc.getCollection = function() { return self; };
         _.extend(doc, self._docHelpers);
         return doc;
     };
