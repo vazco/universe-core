@@ -16,8 +16,8 @@ UniCollection.prototype.setBuilder = function(docBuilder){
     var self = this;
     this._docBuilder = docBuilder;
     this._transform = function(doc){
-        self._docBuilder(doc);
-        doc.getCollection = function() { return self; };
+        doc.getCollection = self.getCollection;
+        self._docBuilder(doc);        
         _.extend(doc, self._docHelpers);
         return doc;
     };
