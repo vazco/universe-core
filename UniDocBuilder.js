@@ -24,6 +24,7 @@ var docMethods = {
         return this.getCollection().update(this._id, {$set: d});
     },
     refresh: function () {
+    //FIXME: We must use simple schema (if exists) to clean deleted values
         var doc = this.getCollection().findOne(this._id, {transform: null});
         _.extend(this, doc);
     },
