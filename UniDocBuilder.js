@@ -5,7 +5,6 @@ var docMethods = {
     remove: function (cb) {
         return this.getCollection().remove(this._id, cb);
     },
-
     save: function () {
         var schema = this.getCollection().simpleSchema();
         var d = {};
@@ -21,7 +20,7 @@ var docMethods = {
                 }
             }
         });
-        return this.getCollection().update(this._id, {$set: d});
+        return this.set(d);
     },
     refresh: function () {
         var doc = this.getCollection().findOne(this._id, {transform: null});
@@ -45,12 +44,11 @@ _([
         var mod = {};
         setObj = setObj || {};
         mod['$' + operator] = setObj;
-        return this.getCollection().update(mod, options, callback);
+        return this.update(mod, options, callback);
     };
 });
 
 
 UniDocBuilder = function (doc) {
-    _(doc).extend(docMethods);
-    return doc;
+    return _.extend(doc, docMethods);
 };

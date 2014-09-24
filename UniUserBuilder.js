@@ -1,16 +1,15 @@
-var getName = function () {
-    if (this.profile) {
-        return this.profile.name;
+var docMethods = {
+    getName: function () {
+        if (this.profile) {
+            return this.profile.name;
+        }
+    },
+    isMe: function () {
+        return Meteor.userId() === this._id;
     }
 };
 
-var isMe = function () {
-    return Meteor.userId() === this._id;
-};
 
 UniUserBuilder = _.compose(function (doc) {
-    doc.getName = getName;
-    doc.isMe = isMe;
-
-    return doc;
+    return _.extend(doc, docMethods);
 }, UniDocBuilder);
