@@ -6,6 +6,7 @@ Package.describe({
 Package.on_use(function (api) {
     api.use([
         'underscore',
+        'accounts-base',
         'aldeed:simple-schema'
     ], ['client', 'server']);
 
@@ -13,9 +14,8 @@ Package.on_use(function (api) {
 
     api.add_files([
         'UniDocBuilder.js',
-        'UniCollection.js',
         'UniUserBuilder.js',
-        'UniUser.js'
+        'UniCollection.js'
     ],  ['client', 'server']);
 
     api.export([
