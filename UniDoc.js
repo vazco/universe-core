@@ -2,6 +2,19 @@ UniDoc = function (doc) {
     return _.extend(this, doc);
 };
 
+UniDoc.extend = function(){
+    var newConstructor = function (doc) {
+        UniDoc.call(this, doc);
+    };
+    var surrogate = function () {
+        this.constructor = newConstructor;
+    };
+    surrogate.prototype = UniDoc.prototype;
+    newConstructor.prototype = new surrogate();
+
+    return newConstructor;
+};
+
 _.extend(UniDoc.prototype, {
     update: function (modifier, options, cb) {
         return this.getCollection().update(this._id, modifier, options, cb);

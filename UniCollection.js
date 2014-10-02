@@ -6,28 +6,18 @@ UniCollection = function(){
     var args = Array.prototype.slice.call(arguments, 0),
         constructor;
 
-    if(args.length===2){
-
-        var params = args[2] || {};
-        if(!_.isFunction(params.constructor)){
+    if (args.length === 2 && args[1].constructor) {
+        if (!_.isFunction(args[1].constructor)) {
             throw new Error('Constructor must be a function.')
         }
-        constructor = params.constructor;
-
+        constructor = args[1].constructor;
     } else {
-
-        constructor = function UniDefaultDoc(doc) {
-            UniDoc.call(this, doc);
-        };
-        var surrogate = function(){ this.constructor = constructor; };
-        surrogate.prototype = UniDoc.prototype;
-        constructor.prototype = new surrogate();
+        constructor = UniDoc.extend();
     }
 
     this.getCollection = function() { return self; };
     this.setConstructor(constructor);
 };
-
 
 var UniCollectionPrototype = function(){ this.constructor = UniCollection; };
 UniCollectionPrototype.prototype = Meteor.Collection.prototype;
