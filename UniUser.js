@@ -1,4 +1,8 @@
-var docMethods = {
+UniUser = function (doc) {
+    UniDoc.call(this, doc);
+};
+
+_.extend(UniUser.prototype, UniDoc.prototype, {
     getName: function () {
         if (this.profile) {
             return this.profile.name;
@@ -7,9 +11,4 @@ var docMethods = {
     isMe: function () {
         return Meteor.userId() === this._id;
     }
-};
-
-
-UniUserBuilder = _.compose(function (doc) {
-    return _.extend(doc, docMethods);
-}, UniDocBuilder);
+});

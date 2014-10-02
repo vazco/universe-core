@@ -13,15 +13,15 @@ Package.on_use(function (api) {
     api.use(['matb33:collection-hooks'], ['client', 'server'], {weak: true});
 
     api.add_files([
-        'UniDocBuilder.js',
-        'UniUserBuilder.js',
+        'UniDoc.js',
+        'UniUser.js',
         'UniCollection.js'
     ],  ['client', 'server']);
 
     api.export([
         'UniCollection',
-        'UniDocBuilder',
-        'UniUserBuilder',
+        'UniDoc',
+        'UniUser',
         'UniUsers'
     ],  ['client', 'server']);
 });

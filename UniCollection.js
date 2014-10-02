@@ -3,42 +3,62 @@ UniCollection = function(){
     var self = this;
     Meteor.Collection.apply(this, arguments);
 
+    var args = Array.prototype.slice.call(arguments, 0),
+        constructor;
+
+    if(args.length===2){
+
+        var params = args[2] || {};
+        if(!_.isFunction(params.constructor)){
+            throw new Error('Constructor must be a function.')
+        }
+        constructor = params.constructor;
+
+    } else {
+
+        constructor = function UniDefaultDoc(doc) {
+            UniDoc.call(this, doc);
+        };
+        var surrogate = function(){ this.constructor = constructor; };
+        surrogate.prototype = UniDoc.prototype;
+        constructor.prototype = new surrogate();
+    }
+
     this.getCollection = function() { return self; };
-    this._docHelpers = {};
-    this.setBuilder(UniDocBuilder);
+    this.setConstructor(constructor);
 };
+
 
 var UniCollectionPrototype = function(){ this.constructor = UniCollection; };
 UniCollectionPrototype.prototype = Meteor.Collection.prototype;
 UniCollection.prototype = new UniCollectionPrototype();
 
-UniCollection.prototype.setBuilder = function(docBuilder){
+UniCollection.prototype.setConstructor = function(docConstructor){
     var self = this;
-    this._docBuilder = docBuilder;
+    this._docConstructor = docConstructor;
+
     this._transform = function(doc){
-        self._docBuilder(doc);
         doc.getCollection = function() { return self; };
-        _.extend(doc, self._docHelpers);
-        return doc;
+        return new docConstructor(doc);
     };
 };
 
 UniCollection.prototype.helpers = function(helpers) {
     var self = this;
     _.each(helpers, function(helper, key) {
-        self._docHelpers[key] = helper;
+        self._docConstructor.prototype[key] = helper;
     });
 };
 
 UniUsers = Object.create(Meteor.users);
 
-UniUsers.setBuilder = UniCollection.prototype.setBuilder;
+UniUsers.setConstructor = UniCollection.prototype.setConstructor;
 UniUsers.helpers = UniCollection.prototype.helpers;
 
-UniUsers.setBuilder(UniUserBuilder);
+UniUsers.setConstructor(UniUser);
 
 UniUsers.current = function(){
-    return UniUsers.findOne(Meteor.userId());
+    return this.findOne(Meteor.userId());
 };
 
 UniUsers.currentId = function(){

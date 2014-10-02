@@ -1,4 +1,8 @@
-var docMethods = {
+UniDoc = function (doc) {
+    return _.extend(this, doc);
+};
+
+_.extend(UniDoc.prototype, {
     update: function (modifier, options, cb) {
         return this.getCollection().update(this._id, modifier, options, cb);
     },
@@ -29,7 +33,7 @@ var docMethods = {
     findMe: function () {
         return this.getCollection().findOne(this._id);
     }
-};
+});
 
 _([
     'inc',
@@ -40,7 +44,7 @@ _([
     'pull',
     'push'
 ]).each(function (operator) {
-    docMethods[operator] = function (setObj, options, callback) {
+    UniDoc.prototype[operator] = function (setObj, options, callback) {
         var mod = {};
         setObj = setObj || {};
         mod['$' + operator] = setObj;
@@ -49,6 +53,3 @@ _([
 });
 
 
-UniDocBuilder = function (doc) {
-    return _.extend(doc, docMethods);
-};
