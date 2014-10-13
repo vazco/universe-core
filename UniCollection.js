@@ -30,7 +30,7 @@ UniCollection.prototype = new UniCollectionPrototype();
 UniCollection.prototype.setConstructor = function (docConstructor) {
     var self = this;
     this._docConstructor = docConstructor;
-
+    debugger;
     this._transform = function (doc) {
         doc.getCollection = function () {
             return self;
@@ -44,22 +44,4 @@ UniCollection.prototype.helpers = function (helpers) {
     _.each(helpers, function (helper, key) {
         self._docConstructor.prototype[key] = helper;
     });
-};
-
-UniUsers = Object.create(Meteor.users);
-
-UniUsers.setConstructor = UniCollection.prototype.setConstructor;
-UniUsers.helpers = UniCollection.prototype.helpers;
-
-UniUsers.setConstructor(UniUser);
-
-UniUsers.current = function () {
-    return this.findOne(Meteor.userId());
-};
-
-UniUsers.currentId = function () {
-    var user = this.current();
-    if (user) {
-        return user._id;
-    }
 };

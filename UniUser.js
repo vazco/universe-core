@@ -1,14 +1,35 @@
-UniUser = function (doc) {
-    UniDoc.call(this, doc);
+// ----- Prototype methods -----
+
+UniUser = UniDoc.extend();
+
+UniUser.prototype.getName = function () {
+    if (this.profile) {
+        return this.profile.name;
+    }
 };
 
-_.extend(UniUser.prototype, UniDoc.prototype, {
-    getName: function () {
-        if (this.profile) {
-            return this.profile.name;
-        }
-    },
-    isMe: function () {
-        return Meteor.userId() === this._id;
+UniUser.prototype.isMe = function () {
+    return Meteor.userId() === this._id;
+};
+
+// ----- Collection clone -----
+
+UniUsers = Object.create(Meteor.users);
+
+UniUsers.setConstructor = UniCollection.prototype.setConstructor;
+UniUsers.helpers = UniCollection.prototype.helpers;
+
+UniUsers.setConstructor(UniUser);
+
+// ----- Static methods -----
+
+UniUsers.current = function () {
+    return this.findOne(Meteor.userId());
+};
+
+UniUsers.currentId = function () {
+    var user = this.current();
+    if (user) {
+        return user._id;
     }
-});
+};
