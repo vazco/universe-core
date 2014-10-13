@@ -14,8 +14,8 @@ Package.on_use(function (api) {
 
     api.add_files([
         'UniDoc.js',
+        'UniCollection.js',
         'UniUser.js',
-        'UniCollection.js'
     ],  ['client', 'server']);
 
     api.export([

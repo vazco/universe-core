@@ -26,7 +26,7 @@ _.extend(UniDoc.prototype, {
         var schema = this.getCollection().simpleSchema();
         var d = {};
         _.each(this, function (v, k) {
-            if (!_.isFunction(v) && k != '_id') {
+            if (this.hasOwnProperty(k) && !_.isFunction(v) && k != '_id') {
                 if (schema) { //with simpleSchema
                     var oneFieldDef = schema.schema(k);
                     if (oneFieldDef && !oneFieldDef.denyUpdate) {

@@ -1,5 +1,4 @@
 UniCollection = function () {
-    'use strict';
     var self = this;
     Meteor.Collection.apply(this, arguments);
 
