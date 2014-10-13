@@ -5,11 +5,11 @@ UniCollection = function () {
     var args = Array.prototype.slice.call(arguments, 0),
         constructor;
 
-    if (args.length === 2 && args[1].constructor) {
-        if (!_.isFunction(args[1].constructor)) {
-            throw new Error('Constructor must be a function.')
+    if (args.length === 2 && args[1].docConstructor) {
+        if (!_.isFunction(args[1].docConstructor)) {
+            throw new Error('docConstructor must be a function.')
         }
-        constructor = args[1].constructor;
+        constructor = args[1].docConstructor;
     } else {
         constructor = UniDoc.extend();
     }
@@ -29,7 +29,7 @@ UniCollection.prototype = new UniCollectionPrototype();
 UniCollection.prototype.setConstructor = function (docConstructor) {
     var self = this;
     this._docConstructor = docConstructor;
-    debugger;
+
     this._transform = function (doc) {
         doc.getCollection = function () {
             return self;
