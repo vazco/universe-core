@@ -1,4 +1,4 @@
-UniCollection = function(){
+UniCollection = function () {
     'use strict';
     var self = this;
     Meteor.Collection.apply(this, arguments);
@@ -15,27 +15,33 @@ UniCollection = function(){
         constructor = UniDoc.extend();
     }
 
-    this.getCollection = function() { return self; };
+    this.getCollection = function () {
+        return self;
+    };
     this.setConstructor(constructor);
 };
 
-var UniCollectionPrototype = function(){ this.constructor = UniCollection; };
+var UniCollectionPrototype = function () {
+    this.constructor = UniCollection;
+};
 UniCollectionPrototype.prototype = Meteor.Collection.prototype;
 UniCollection.prototype = new UniCollectionPrototype();
 
-UniCollection.prototype.setConstructor = function(docConstructor){
+UniCollection.prototype.setConstructor = function (docConstructor) {
     var self = this;
     this._docConstructor = docConstructor;
 
-    this._transform = function(doc){
-        doc.getCollection = function() { return self; };
-        return new docConstructor(doc);
+    this._transform = function (doc) {
+        doc.getCollection = function () {
+            return self;
+        };
+        return new self._docConstructor(doc);
     };
 };
 
-UniCollection.prototype.helpers = function(helpers) {
+UniCollection.prototype.helpers = function (helpers) {
     var self = this;
-    _.each(helpers, function(helper, key) {
+    _.each(helpers, function (helper, key) {
         self._docConstructor.prototype[key] = helper;
     });
 };
@@ -47,13 +53,13 @@ UniUsers.helpers = UniCollection.prototype.helpers;
 
 UniUsers.setConstructor(UniUser);
 
-UniUsers.current = function(){
+UniUsers.current = function () {
     return this.findOne(Meteor.userId());
 };
 
-UniUsers.currentId = function(){
+UniUsers.currentId = function () {
     var user = this.current();
-    if(user){
+    if (user) {
         return user._id;
     }
 };
