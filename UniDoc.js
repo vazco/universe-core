@@ -1,16 +1,32 @@
-var docMethods = {
+UniDoc = function (doc) {
+    return _.extend(this, doc);
+};
+
+UniDoc.extend = function(){
+    var newConstructor = function (doc) {
+        UniDoc.call(this, doc);
+    };
+    var surrogate = function () {
+        this.constructor = newConstructor;
+    };
+    surrogate.prototype = UniDoc.prototype;
+    newConstructor.prototype = new surrogate();
+
+    return newConstructor;
+};
+
+_.extend(UniDoc.prototype, {
     update: function (modifier, options, cb) {
         return this.getCollection().update(this._id, modifier, options, cb);
     },
     remove: function (cb) {
         return this.getCollection().remove(this._id, cb);
     },
-
     save: function () {
         var schema = this.getCollection().simpleSchema();
         var d = {};
         _.each(this, function (v, k) {
-            if (!_.isFunction(v) && k != '_id') {
+            if (this.hasOwnProperty(k) && !_.isFunction(v) && k != '_id') {
                 if (schema) { //with simpleSchema
                     var oneFieldDef = schema.schema(k);
                     if (oneFieldDef && !oneFieldDef.denyUpdate) {
@@ -21,7 +37,7 @@ var docMethods = {
                 }
             }
         });
-        return this.getCollection().update(this._id, {$set: d});
+        return this.set(d);
     },
     refresh: function () {
     //FIXME: We must use simple schema (if exists) to clean deleted values
@@ -31,7 +47,7 @@ var docMethods = {
     findMe: function () {
         return this.getCollection().findOne(this._id);
     }
-};
+});
 
 _([
     'inc',
@@ -42,16 +58,12 @@ _([
     'pull',
     'push'
 ]).each(function (operator) {
-    docMethods[operator] = function (setObj, options, callback) {
+    UniDoc.prototype[operator] = function (setObj, options, callback) {
         var mod = {};
         setObj = setObj || {};
         mod['$' + operator] = setObj;
-        return this.getCollection().update(mod, options, callback);
+        return this.update(mod, options, callback);
     };
 });
 
 
-UniDocBuilder = function (doc) {
-    _(doc).extend(docMethods);
-    return doc;
-};
