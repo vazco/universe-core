@@ -5,7 +5,7 @@ UniCollection = function () {
     var args = Array.prototype.slice.call(arguments, 0),
         constructor;
 
-    if (args.length === 2 && args[1].docConstructor) {
+    if (args.length === 2 && args[1] && args[1].docConstructor) {
         if (!_.isFunction(args[1].docConstructor)) {
             throw new Error('docConstructor must be a function.')
         }

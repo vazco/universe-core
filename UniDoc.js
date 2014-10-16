@@ -11,6 +11,7 @@ UniDoc.extend = function(){
     };
     surrogate.prototype = UniDoc.prototype;
     newConstructor.prototype = new surrogate();
+    newConstructor.extend = UniDoc.extend;
 
     return newConstructor;
 };
