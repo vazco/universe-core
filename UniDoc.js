@@ -23,22 +23,15 @@ _.extend(UniDoc.prototype, {
     remove: function (cb) {
         return this.getCollection().remove(this._id, cb);
     },
-    save: function () {
-        var schema = this.getCollection().simpleSchema();
-        var d = {};
-        _.each(this, function (v, k) {
-            if (this.hasOwnProperty(k) && !_.isFunction(v) && k != '_id') {
-                if (schema) { //with simpleSchema
-                    var oneFieldDef = schema.schema(k);
-                    if (oneFieldDef && !oneFieldDef.denyUpdate) {
-                        d[k] = v;
-                    }
-                } else { //without simpleSchema
-                    d[k] = v;
-                }
-            }
-        });
-        return this.set(d);
+    save: function (fieldsList) {
+        if(_.isString(fieldsList)){
+            fieldsList = [fieldsList];
+        }
+        if(!_.isArray(fieldsList)){
+            throw new Meteor.Error(500, 'You must pass list of keys for save');
+        }
+        var obj = _.pick(this, fieldsList);
+        return this.update({$set:obj});
     },
     refresh: function () {
     //FIXME: We must use simple schema (if exists) to clean deleted values
