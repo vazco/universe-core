@@ -1,97 +1,54 @@
-Użycie:
-To zmieniamy 
+#Universe Core
+
+## About
+
+Universe Core is package providing simple database mapping. It is extending plain JS objects by adding common methods used in all projects.
+
+## How to use
+
+### Creating collection
+Instead of using standard:
 ```
 #!javascript
 
 Colls.Books = new Mongo.Collection('Books');
 ```
 
-na to
+use this:
 ```
 #!javascript
 
  Colls.Books = new UniCollection('Books');
 ```
 
-Rozszerzanie standardowego dokumentu:
+###Basic use
 
+You can use Collection.helpers method to register new methods to objects.
 
 ```
 #!javascript
 
-UniBook = function(doc){
-    doc.read = function(){
+Colls.Books = new UniCollection('Books');
+
+Colls.Books.helpers({
+    read: function(){
         this.isReaded = true;
         this.save();
     }
-};
-
-UniBook = _.compose(UniBook, UniDocBuilder);
-
-Colls.Books.setBuilder(UniBook);
+});
 ```
 
-lub
+###Users
 
+Universe-core provides UniUsers object which is a copy of Meteor.users collection object that shares the same document with. It is just a simple hack to make sure that Meteor.users collection stay unmodiefied. Both operates on the same documents, only methods to access objects have changed.
 
-```
-#!javascript
+##API
 
-Colls.Books.helpers({read: function(){
-    this.isReaded = true;
-     this.save();
-}});
-```
+Default methods for all UniCollections documets (including UniUsers):
 
+```doc.update(modifier, options, cb)``` - performs update on current document.
 
-Możemy też tak samo dodawać na naszej pseudo kolekcji userów:
-(Pisze pseudo kolekcja gdyż z tego obiektu mamy dostęp tylko do metod kolekcji userów i paru dodatkowych funkcji jak current)
+```doc.remove(cb)``` - removes current document.
 
-```
-#!javascript
+```doc.findMe()``` - returns current document from database. Useful for tracking reactive changes.
 
-UniUser = function(doc){
-    doc.getName = function(){
-        return doc.profile.name;
-    }
-};
-
-UniUser = _.compose(UniUser, UniDocBuilder);
-Colls.Books.setBuilder(UniUser);
-```
-
-lub
-
-```
-#!javascript
-
-UniUsers.helpers({getName: function(){
-   return this.profile.name;
-}});
-```
-Potem mamy:
-
-```
-#!javascript
-
-Colls.Books.findOne().read();
-```
-
-czy:
-
-```
-#!javascript
-
-UniUsers.findOne().getName();
-```
-
-W standardzie mamy takie zabawki jak update z dokumentu, refresh danych czy np save:
-
-
-```
-#!javascript
-
-var book = Colls.Books.findOne('zkkfN4Tr4Xm85fGpn');
-book.title = 'Nowy T';
-book.save();
-```
