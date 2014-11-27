@@ -9,7 +9,7 @@ Package.on_use(function (api) {
     api.use([
         'underscore@1.0.1',
         'accounts-base@1.1.2',
-        'aldeed:simple-schema@0.0.0'
+        'aldeed:simple-schema'
     ], ['client', 'server']);
 
     api.use(['matb33:collection-hooks'], ['client', 'server'], {weak: true});
