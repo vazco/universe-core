@@ -9,10 +9,10 @@ Package.on_use(function (api) {
     api.use([
         'underscore@1.0.1',
         'accounts-base@1.1.2',
-        'aldeed:simple-schema@1.1.0'
+        'aldeed:simple-schema'
     ], ['client', 'server']);
 
-    api.use(['matb33:collection-hooks@0.7.6'], ['client', 'server'], {weak: true});
+    api.use(['matb33:collection-hooks'], ['client', 'server'], {weak: true});
 
     api.add_files([
         'UniDoc.js',
