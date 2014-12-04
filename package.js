@@ -1,18 +1,18 @@
 Package.describe({
     summary: 'Universe CMS Core package',
     name: 'vazco:universe-core',
-    version: "0.9.0",
-    git: "https://cristo-rabani@bitbucket.org/vazco/universe-core.git"
+    version: "0.9.2",
+    git: "https://github.com/vazco/universe-core.git"
 });
 
 Package.on_use(function (api) {
     api.use([
         'underscore@1.0.1',
         'accounts-base@1.1.2',
-        'aldeed:simple-schema@0.0.0'
+        'aldeed:simple-schema@1.1.0'
     ], ['client', 'server']);
 
-    api.use(['matb33:collection-hooks'], ['client', 'server'], {weak: true});
+    api.use(['matb33:collection-hooks@0.7.6'], ['client', 'server'], {weak: true});
 
     api.add_files([
         'UniDoc.js',
