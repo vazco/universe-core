@@ -28,8 +28,5 @@ UniUsers.current = function () {
 };
 
 UniUsers.currentId = function () {
-    var user = this.current();
-    if (user) {
-        return user._id;
-    }
+    return Meteor.userId();
 };
