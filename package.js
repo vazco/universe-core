@@ -1,12 +1,14 @@
 Package.describe({
     summary: 'Universe CMS Core package',
-    name: 'vazco:universe-core'
+    name: 'vazco:universe-core',
+    version: "0.9.2",
+    git: "https://github.com/vazco/universe-core.git"
 });
 
 Package.on_use(function (api) {
     api.use([
-        'underscore',
-        'accounts-base',
+        'underscore@1.0.1',
+        'accounts-base@1.1.2',
         'aldeed:simple-schema'
     ], ['client', 'server']);
 
