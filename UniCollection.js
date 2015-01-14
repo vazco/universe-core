@@ -26,6 +26,15 @@ var UniCollectionPrototype = function () {
 UniCollectionPrototype.prototype = Meteor.Collection.prototype;
 UniCollection.prototype = new UniCollectionPrototype();
 
+/**
+ * Sets transformation function for collection.
+ * Function passed as an argument will be executed for each document
+ * to transform selected documents before the method (like: find, findOne) returns them.
+ * UniDoc is a default of document constructor.
+ * A good way is inheritance of UniDoc, instead create new constructor
+ * @param docConstructor transformation function
+ * @see UniDoc
+ */
 UniCollection.prototype.setConstructor = function (docConstructor) {
     var self = this;
     this._docConstructor = docConstructor;
@@ -38,9 +47,38 @@ UniCollection.prototype.setConstructor = function (docConstructor) {
     };
 };
 
+/**
+ * Using this method you can add new helpers function into document prototype.
+ * It's alternative way to setConstructor.
+ * All of this methods will be added to returned document by function find, findOne
+ * @param helpers
+ */
 UniCollection.prototype.helpers = function (helpers) {
     var self = this;
     _.each(helpers, function (helper, key) {
         self._docConstructor.prototype[key] = helper;
     });
+};
+
+/**
+ * Checks if document belongs to collection name
+ * @param doc it must be an universe document ( transformed by universe )
+ * @returns boolean
+ */
+UniCollection.isDocumentFromCollection = function(doc, collectionName){
+    if(_.isObject(doc) && doc.getCollection){
+        return doc.getCollection()._name === collectionName;
+    }
+};
+
+/**
+ * Checks if document belongs to this collection
+ * @param doc object or id (on client side you must have this doc in minimongo![subscription needed])
+ * @returns boolean
+ */
+UniCollection.prototype.hasDocument = function(doc){
+    if(_.isString(doc)){
+        doc = this.findOne(doc);
+    }
+    return UniCollection.isDocumentFromCollection(doc, this._name);
 };
