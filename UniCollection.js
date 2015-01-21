@@ -82,3 +82,24 @@ UniCollection.prototype.hasDocument = function(doc){
     }
     return UniCollection.isDocumentFromCollection(doc, this._name);
 };
+
+/**
+ * Gets options from field in the collections schema
+ * @param fieldNam: String - schema field name in the collection
+ * @returns {[]} <fieldName>autoform.options key in schema
+ */
+UniCollection.prototype.getFieldOptionsFromSchema = function (fieldName) {
+    if(!_.isFunction(this.simpleSchema)){
+        throw new Meteor.Error('Simple Schema is not attached on this collection!');
+    }
+    if (_.isString(fieldName)) {
+        var field = this.simpleSchema().schema(fieldName);
+        var options = Vazco.get(field, 'autoform.options');
+        if (_.isArray(options)) {
+            return options;
+        } else {
+            console.warn('Missing options array in the schema for field "' + fieldName + '"');
+            return;
+        }
+    }
+};
