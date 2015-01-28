@@ -23,9 +23,8 @@ UniDoc.extend = function(){
 /**
  * Performs update on current document
  * @param modifier
- * @param options (optional) Same as Mongo.Collection.update has.
- * but extended by additional parameter:
- * 'direct' - It helps circumvent any defined hooks by plugin matb33/meteor-collection-hooks
+ * @param options (optional) Same as Mongo.Collection.update has, but extended by additional parameter:
+ * @param options.direct Boolean - It helps circumvent any defined hooks by plugin matb33/meteor-collection-hooks
  * @param cb
  * @returns {*}
  */
@@ -37,10 +36,8 @@ UniDoc.prototype.update = function (modifier, options, cb) {
     return col.update(this._id, modifier, options, cb);
 };
 /**
- * Performs update on current document
- * @param modifier
- * @param options (optional)
- * 'direct' - It helps circumvent any defined hooks by plugin matb33/meteor-collection-hooks
+ * Performs remove on current document
+ * @param options.direct Boolean - It helps circumvent any defined hooks by plugin matb33/meteor-collection-hooks
  * @param cb
  * @returns {*}
  */
