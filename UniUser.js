@@ -16,6 +16,10 @@ UniUser.prototype.isLoggedIn = function () {
     return Meteor.userId() === this._id;
 };
 
+UniUser.prototype.isAdmin = function () {
+    return this.is_admin;
+};
+
 // ----- Collection clone -----
 /* global UniUsers: true */
 UniUsers = Object.create(Meteor.users);
@@ -33,4 +37,13 @@ UniUsers.getLoggedIn = function () {
 
 UniUsers.getLoggedInId = function () {
     return Meteor.userId();
+};
+
+UniUsers.isLoggedIn = function () {
+    return !!Meteor.userId();
+};
+
+UniUsers.isAdminLoggedIn = function () {
+    var user = UniUsers.getLoggedIn();
+    return user.isAdmin();
 };
