@@ -12,7 +12,7 @@ UniUser.prototype.getName = function () {
     }
 };
 
-UniUser.prototype.isMe = function () {
+UniUser.prototype.isLoggedIn = function () {
     return Meteor.userId() === this._id;
 };
 
@@ -27,10 +27,10 @@ UniUsers.setConstructor(UniUser);
 
 // ----- Static methods -----
 
-UniUsers.current = function () {
+UniUsers.getLoggedIn = function () {
     return this.findOne(Meteor.userId());
 };
 
-UniUsers.currentId = function () {
+UniUsers.getLoggedInId = function () {
     return Meteor.userId();
 };
