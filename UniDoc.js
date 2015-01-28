@@ -56,6 +56,7 @@ _([
         var mod = {};
         setObj = setObj || {};
         mod['$' + operator] = setObj;
+        console.warn('Method "'+operator+'" is deprecated! please use update() or save() instead!');
         return this.update(mod, options, callback);
     };
 });

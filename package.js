@@ -1,7 +1,7 @@
 Package.describe({
     summary: 'Universe CMS Core package',
     name: 'vazco:universe-core',
-    version: '0.9.7',
+    version: '0.9.8',
     git: 'https://github.com/vazco/universe-core.git'
 });
 
