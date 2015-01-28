@@ -45,5 +45,8 @@ UniUsers.isLoggedIn = function () {
 
 UniUsers.isAdminLoggedIn = function () {
     var user = UniUsers.getLoggedIn();
+    if(!user){
+        return false;
+    }
     return user.isAdmin();
 };
