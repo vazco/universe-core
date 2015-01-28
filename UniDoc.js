@@ -1,64 +1,95 @@
+'use strict';
+
+/* global UniDoc: true */
+
 UniDoc = function (doc) {
     return _.extend(this, doc);
 };
 
 UniDoc.extend = function(){
-    var newConstructor = function (doc) {
+    var UniverseDoc = function (doc) {
         UniDoc.call(this, doc);
     };
+
     var surrogate = function () {
-        this.constructor = newConstructor;
+        this.constructor = UniverseDoc;
     };
     surrogate.prototype = UniDoc.prototype;
-    newConstructor.prototype = new surrogate();
-    newConstructor.extend = UniDoc.extend;
-
-    return newConstructor;
+    /*jshint -W055 */
+    UniverseDoc.prototype = new surrogate();
+    UniverseDoc.extend = UniDoc.extend;
+    return UniverseDoc;
+};
+/**
+ * Performs update on current document
+ * @param modifier
+ * @param options (optional) Same as Mongo.Collection.update has.
+ * but extended by additional parameter:
+ * 'direct' - It helps circumvent any defined hooks by plugin matb33/meteor-collection-hooks
+ * @param cb
+ * @returns {*}
+ */
+UniDoc.prototype.update = function (modifier, options, cb) {
+    var col = this.getCollection();
+    if(_.isObject(options) && options.direct && col.direct){
+        col = col.direct;
+    }
+    return col.update(this._id, modifier, options, cb);
+};
+/**
+ * Performs update on current document
+ * @param modifier
+ * @param options (optional)
+ * 'direct' - It helps circumvent any defined hooks by plugin matb33/meteor-collection-hooks
+ * @param cb
+ * @returns {*}
+ */
+UniDoc.prototype.remove = function (options, cb) {
+    var col = this.getCollection();
+    if(_.isObject(options) && options.direct && col.direct){
+        col = col.direct;
+    }
+    if(_.isFunction(options) && !cb){
+        cb = options;
+    }
+    return col.remove(this._id, cb);
+};
+/**
+ * Saves selected keys in current document
+ * @param fieldsList name or array with names of fields to save
+ * @returns {*}
+ */
+UniDoc.prototype.save = function (fieldsList) {
+    if(_.isString(fieldsList)){
+        fieldsList = [fieldsList];
+    }
+    if(!_.isArray(fieldsList)){
+        throw new Meteor.Error(500, 'You must pass list of keys for save');
+    }
+    var obj = _.pick(this, fieldsList);
+    return this.update({$set:obj});
+};
+/**
+ * Update fields in current document
+ */
+UniDoc.prototype.refresh = function () {
+    var doc = this.getCollection().findOne(this._id);
+    var self = this;
+    _.each(self, function(v, k){
+        if(doc[k]){
+            self[k] = doc[k];
+        } else{
+            delete self[k];
+        }
+    });
+};
+/**
+ * Returns fresh instance of current document using id of this doc
+ * @returns {any}
+ */
+UniDoc.prototype.findSelf = function () {
+    return this.getCollection().findOne(this._id);
 };
 
-_.extend(UniDoc.prototype, {
-    update: function (modifier, options, cb) {
-        return this.getCollection().update(this._id, modifier, options, cb);
-    },
-    remove: function (cb) {
-        return this.getCollection().remove(this._id, cb);
-    },
-    save: function (fieldsList) {
-        if(_.isString(fieldsList)){
-            fieldsList = [fieldsList];
-        }
-        if(!_.isArray(fieldsList)){
-            throw new Meteor.Error(500, 'You must pass list of keys for save');
-        }
-        var obj = _.pick(this, fieldsList);
-        return this.update({$set:obj});
-    },
-    refresh: function () {
-    //FIXME: We must use simple schema (if exists) to clean deleted values
-        var doc = this.getCollection().findOne(this._id, {transform: null});
-        _.extend(this, doc);
-    },
-    findMe: function () {
-        return this.getCollection().findOne(this._id);
-    }
-});
-
-_([
-    'inc',
-    'set',
-    'unset',
-    'addToSet',
-    'pop',
-    'pull',
-    'push'
-]).each(function (operator) {
-    UniDoc.prototype[operator] = function (setObj, options, callback) {
-        var mod = {};
-        setObj = setObj || {};
-        mod['$' + operator] = setObj;
-        console.warn('Method "'+operator+'" is deprecated! please use update() or save() instead!');
-        return this.update(mod, options, callback);
-    };
-});
 
 

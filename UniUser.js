@@ -1,3 +1,7 @@
+'use strict';
+
+/* global UniUser: true */
+
 // ----- Prototype methods -----
 
 UniUser = UniDoc.extend();
@@ -13,7 +17,7 @@ UniUser.prototype.isMe = function () {
 };
 
 // ----- Collection clone -----
-
+/* global UniUsers: true */
 UniUsers = Object.create(Meteor.users);
 
 UniUsers.setConstructor = UniCollection.prototype.setConstructor;
