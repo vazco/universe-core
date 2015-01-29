@@ -36,6 +36,8 @@
         "UniPlugin": true,
         "UniClass": true,
         "SimpleSchema": false,
-        "UniUsers": true
+        "UniUsers": true,
+        "UniDoc": true,
+        "UniCollection": true
     }
 }

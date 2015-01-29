@@ -1,7 +1,7 @@
 Package.describe({
     summary: 'Universe CMS Core package',
     name: 'vazco:universe-core',
-    version: '0.9.8',
+    version: '1.0.0',
     git: 'https://github.com/vazco/universe-core.git'
 });
 
@@ -10,7 +10,7 @@ Package.on_use(function (api) {
         'underscore@1.0.1',
         'accounts-base@1.1.2',
         'aldeed:simple-schema',
-        'vazco:tools-common'
+        'vazco:tools-common@1.0.1'
     ], ['client', 'server']);
 
     api.use(['matb33:collection-hooks'], ['client', 'server'], {weak: true});
@@ -19,6 +19,7 @@ Package.on_use(function (api) {
         'UniDoc.js',
         'UniCollection.js',
         'UniUser.js',
+        'basicSchema.js'
     ],  ['client', 'server']);
 
     api.export([

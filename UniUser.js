@@ -1,3 +1,7 @@
+'use strict';
+
+/* global UniUser: true */
+
 // ----- Prototype methods -----
 
 UniUser = UniDoc.extend();
@@ -8,13 +12,21 @@ UniUser.prototype.getName = function () {
     }
 };
 
-UniUser.prototype.isMe = function () {
+UniUser.prototype.isLoggedIn = function () {
     return Meteor.userId() === this._id;
 };
 
-// ----- Collection clone -----
+UniUser.prototype.isAdmin = function () {
+    return this.is_admin;
+};
 
+// ----- Collection clone -----
+/* global UniUsers: true */
 UniUsers = Object.create(Meteor.users);
+
+UniUsers._getCollection = function(){
+    return UniUsers;
+};
 
 UniUsers.setConstructor = UniCollection.prototype.setConstructor;
 UniUsers.helpers = UniCollection.prototype.helpers;
@@ -23,10 +35,22 @@ UniUsers.setConstructor(UniUser);
 
 // ----- Static methods -----
 
-UniUsers.current = function () {
+UniUsers.getLoggedIn = function () {
     return this.findOne(Meteor.userId());
 };
 
-UniUsers.currentId = function () {
+UniUsers.getLoggedInId = function () {
     return Meteor.userId();
+};
+
+UniUsers.isLoggedIn = function () {
+    return !!Meteor.userId();
+};
+
+UniUsers.isAdminLoggedIn = function () {
+    var user = UniUsers.getLoggedIn();
+    if(!user){
+        return false;
+    }
+    return user.isAdmin();
 };

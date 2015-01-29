@@ -1,3 +1,6 @@
+'use strict';
+
+/* global UniDoc: true */
 UniCollection = function () {
     var self = this;
     Meteor.Collection.apply(this, arguments);
@@ -7,14 +10,14 @@ UniCollection = function () {
 
     if (args.length === 2 && args[1] && args[1].docConstructor) {
         if (!_.isFunction(args[1].docConstructor)) {
-            throw new Error('docConstructor must be a function.')
+            throw new Error('docConstructor must be a function.');
         }
         constructor = args[1].docConstructor;
     } else {
         constructor = UniDoc.extend();
     }
 
-    this.getCollection = function () {
+    this._getCollection = function () {
         return self;
     };
     this.setConstructor(constructor);
@@ -38,11 +41,8 @@ UniCollection.prototype = new UniCollectionPrototype();
 UniCollection.prototype.setConstructor = function (docConstructor) {
     var self = this;
     this._docConstructor = docConstructor;
-
+    this._docConstructor.prototype.getCollection = this._getCollection;
     this._transform = function (doc) {
-        doc.getCollection = function () {
-            return self;
-        };
         return new self._docConstructor(doc);
     };
 };

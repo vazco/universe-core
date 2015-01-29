@@ -33,7 +33,7 @@ Colls.Books = new UniCollection('Books');
 Colls.Books.helpers({
     read: function(){
         this.isReaded = true;
-        this.save();
+        this.save('isReaded');
     }
 });
 ```
@@ -44,11 +44,11 @@ Universe-core provides UniUsers object which is a copy of Meteor.users collectio
 
 ##API
 
-Default methods for all UniCollections documets (including UniUsers):
+Default methods for all UniCollections documents (including UniUsers):
 
 ```doc.update(modifier, options, cb)``` - performs update on current document.
 
 ```doc.remove(cb)``` - removes current document.
 
-```doc.findMe()``` - returns current document from database. Useful for tracking reactive changes.
+```doc.findSelf()``` - returns current document from database. Useful for tracking reactive changes.
 
