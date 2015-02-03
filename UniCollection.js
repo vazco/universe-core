@@ -111,7 +111,7 @@ UniCollection.prototype.getFieldOptionsFromSchema = function (fieldName) {
 /**
  * Adds error support for all updates on client side, even if callback for update wasn't provided.
  * When update is unsuccessful function 'onErrorFn' will be called
- * @param onErrorFn (optional) If is not passed then Vazco.setErrorMessage for 'header' place will be called
+ * @param {function=} onErrorFn (optional) If is not passed then Vazco.setErrorMessage for 'header' place will be called
  * or alert if Vazco.setErrorMessage is missing
  */
 UniCollection.prototype.addErrorSupportToUpdates = function(onErrorFn){
@@ -159,7 +159,7 @@ UniCollection.prototype.addErrorSupportToUpdates = function(onErrorFn){
 /**
  * Adds error support for all inserts on client side, even if callback for update wasn't provided.
  * When update is unsuccessful function 'onErrorFn' will be called
- * @param onErrorFn (optional) If is not passed then Vazco.setErrorMessage for 'header' place will be called
+ * @param {function=} onErrorFn (optional) If is not passed then Vazco.setErrorMessage for 'header' place will be called
  * or alert if Vazco.setErrorMessage is missing
  */
 UniCollection.prototype.addErrorSupportToInserts = function(onErrorFn){
@@ -207,7 +207,7 @@ UniCollection.prototype.addErrorSupportToInserts = function(onErrorFn){
 /**
  * Adds error support for all removes on client side, even if callback for update wasn't provided.
  * When update is unsuccessful function 'onErrorFn' will be called
- * @param onErrorFn (optional) If is not passed then Vazco.setErrorMessage for 'header' place will be called
+ * @param {function=} onErrorFn (optional) If is not passed then Vazco.setErrorMessage for 'header' place will be called
  * or alert if Vazco.setErrorMessage is missing
  */
 UniCollection.prototype.addErrorSupportToRemoves = function(onErrorFn){
@@ -255,7 +255,7 @@ UniCollection.prototype.addErrorSupportToRemoves = function(onErrorFn){
 /**
  * Adds error support for all removes on client side, even if callback for update wasn't provided.
  * When update is unsuccessful function 'onErrorFn' will be called
- * @param onErrorFn (optional) If is not passed then Vazco.setErrorMessage for 'header' place will be called
+ * @param {function=} onErrorFn (optional) If is not passed then Vazco.setErrorMessage for 'header' place will be called
  * or alert if Vazco.setErrorMessage is missing
  */
 UniCollection.prototype.addErrorSupportToUpserts = function(onErrorFn){
