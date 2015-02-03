@@ -14,6 +14,7 @@ Package.on_use(function (api) {
     ], ['client', 'server']);
 
     api.use(['matb33:collection-hooks'], ['client', 'server'], {weak: true});
+    api.use(['vazco:tools-messages'], ['client', 'server'], {weak: true});
 
     api.add_files([
         'UniDoc.js',

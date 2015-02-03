@@ -38,6 +38,7 @@
         "SimpleSchema": false,
         "UniUsers": true,
         "UniDoc": true,
-        "UniCollection": true
+        "UniCollection": true,
+        "Vazco": false
     }
 }
