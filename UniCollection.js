@@ -1,6 +1,6 @@
 'use strict';
 
-/* global UniDoc: true */
+/* global UniCollection: true */
 UniCollection = function () {
     var self = this;
     Meteor.Collection.apply(this, arguments);
