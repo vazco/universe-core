@@ -54,3 +54,15 @@ UniUsers.isAdminLoggedIn = function () {
     }
     return user.isAdmin();
 };
+
+/**
+ * Checks if document belongs to this collection
+ * @param doc object or id (on client side you must have this doc in minimongo![subscription needed])
+ * @returns boolean
+ */
+UniUsers.hasDocument = function(doc){
+    if(_.isString(doc)){
+        doc = UniUsers.findOne(doc);
+    }
+    return UniCollection.isDocumentFromCollection(doc, UniUsers._name);
+};
