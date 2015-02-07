@@ -22,6 +22,7 @@
         "_": false,
         "$": false,
         "Meteor": false,
+        "Blaze": false,
         "Accounts": false,
         "Session": false,
         "Template": false,
@@ -38,7 +39,11 @@
         "SimpleSchema": false,
         "UniUsers": true,
         "UniDoc": true,
+        "UniUtils": true,
+        "UniConfig": true,
         "UniCollection": true,
-        "Vazco": false
+        "Vazco": true,
+        "App": true,
+        "Colls": true
     }
 }
