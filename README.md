@@ -4,6 +4,8 @@
 
 Universe Core is package providing simple database mapping. It is extending plain JS objects by adding common methods used in all projects.
 
+##Information about utilities you can find here: [UniUtils](utilities/README.md)
+
 ## How to use
 
 ### Creating collection
@@ -51,4 +53,6 @@ Default methods for all UniCollections documents (including UniUsers):
 ```doc.remove(cb)``` - removes current document.
 
 ```doc.findSelf()``` - returns current document from database. Useful for tracking reactive changes.
+
+
 
