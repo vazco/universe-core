@@ -318,3 +318,24 @@ UniCollection.prototype.addErrorSupportToAllWriteMethods = function(onErrorFn){
     this.addErrorSupportToUpdates(onErrorFn);
     this.addErrorSupportToRemoves(onErrorFn);
 };
+
+/**
+ * Adds default sort options to find,
+ * but default sort option are used only when someone call find without sort options
+ * @param sort
+ */
+UniCollection.prototype.setDefaultSort = function(sort) {
+    var self = this;
+    if(!self._orgFind){
+        self._orgFind = self.find;
+    }
+    self.find = function(selector, options){
+        if(!options || !options.sort){
+            if(!options){
+                options = {};
+            }
+            options.sort = sort;
+        }
+        return self._orgFind(selector || {}, options);
+    };
+};
