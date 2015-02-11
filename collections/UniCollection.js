@@ -149,7 +149,10 @@ UniCollection.prototype.addErrorSupportToUpdates = function(onErrorFn){
             var fn = params[ind];
             var callback = function(){
                 if(arguments.length && arguments[0]){
-                    console.error(collection._name+' - update: '+ arguments[0].reason || arguments[0].message);
+                    console.error(
+                        collection._name+' - update: '+ arguments[0].reason || arguments[0].message,
+                        '- arguments: ', params
+                    );
                     onErrorFn(arguments[0]);
                 }
                 if(_.isFunction(fn)){
@@ -191,7 +194,10 @@ UniCollection.prototype.addErrorSupportToInserts = function(onErrorFn){
             var fn = params[ind];
             var callback = function(){
                 if(arguments.length && arguments[0]){
-                    console.error(collection._name+' - insert: '+ arguments[0].reason || arguments[0].message);
+                    console.error(
+                        collection._name+' - insert: '+ arguments[0].reason || arguments[0].message,
+                        '- arguments: ', params
+                    );
                     onErrorFn(arguments[0]);
                 }
                 if(_.isFunction(fn)){
@@ -233,7 +239,10 @@ UniCollection.prototype.addErrorSupportToRemoves = function(onErrorFn){
             var fn = params[ind];
             var callback = function(){
                 if(arguments.length && arguments[0]){
-                    console.error(collection._name+' - remove: '+ arguments[0].reason || arguments[0].message);
+                    console.error(
+                        collection._name+' - remove: '+ arguments[0].reason || arguments[0].message,
+                        '- arguments: ', params
+                    );
                     onErrorFn(arguments[0]);
                 }
                 if(_.isFunction(fn)){
@@ -275,7 +284,10 @@ UniCollection.prototype.addErrorSupportToUpserts = function(onErrorFn){
             var fn = params[ind];
             var callback = function(){
                 if(arguments.length && arguments[0]){
-                    console.error(collection._name+' - upsert: '+ arguments[0].reason || arguments[0].message);
+                    console.error(
+                        collection._name+' - upsert: '+ arguments[0].reason || arguments[0].message,
+                        '- arguments: ', params
+                    );
                     onErrorFn(arguments[0]);
                 }
                 if(_.isFunction(fn)){
