@@ -108,6 +108,23 @@ UniCollection.prototype.getFieldOptionsFromSchema = function (fieldName) {
     }
 };
 
+UniCollection._showError = function(text){
+    if(_.isObject(text)){
+        text = text.reason || text.message;
+    }
+    var uiShowErr;
+    if(typeof UniUI === 'object'){
+        uiShowErr = UniUI.setErrorMessage;
+    } else if(UniUtils.setErrorMessage){
+        uiShowErr = UniUtils.setErrorMessage;
+    }
+    if(uiShowErr){
+        uiShowErr('header', text);
+    } else {
+        alert(text);
+    }
+};
+
 /**
  * Adds error support for all updates on client side, even if callback for update wasn't provided.
  * When update is unsuccessful function 'onErrorFn' will be called
@@ -122,13 +139,7 @@ UniCollection.prototype.addErrorSupportToUpdates = function(onErrorFn){
     var _update = this.update;
     var collection = this;
     if(!_.isFunction(onErrorFn)){
-        onErrorFn = function(error){
-            if(Vazco && Vazco.setErrorMessage){
-                Vazco.setErrorMessage('header', error.reason);
-            } else {
-                alert(error.reason);
-            }
-        };
+        onErrorFn = UniCollection._showError;
     }
     this.update = function(){
         var self = this;
@@ -170,13 +181,7 @@ UniCollection.prototype.addErrorSupportToInserts = function(onErrorFn){
     var _insert = this.insert;
     var collection = this;
     if(!_.isFunction(onErrorFn)){
-        onErrorFn = function(error){
-            if(Vazco && Vazco.setErrorMessage){
-                Vazco.setErrorMessage('header', error.reason);
-            } else {
-                alert(error.reason);
-            }
-        };
+        onErrorFn = UniCollection._showError;
     }
     this.insert = function(){
         var self = this;
@@ -218,13 +223,7 @@ UniCollection.prototype.addErrorSupportToRemoves = function(onErrorFn){
     var _remove = this.remove;
     var collection = this;
     if(!_.isFunction(onErrorFn)){
-        onErrorFn = function(error){
-            if(Vazco && Vazco.setErrorMessage){
-                Vazco.setErrorMessage('header', error.reason);
-            } else {
-                alert(error.reason);
-            }
-        };
+        onErrorFn = UniCollection._showError;
     }
     this.remove = function(){
         var self = this;
@@ -266,13 +265,7 @@ UniCollection.prototype.addErrorSupportToUpserts = function(onErrorFn){
     var _upsert = this.upsert;
     var collection = this;
     if(!_.isFunction(onErrorFn)){
-        onErrorFn = function(error){
-            if(Vazco && Vazco.setErrorMessage){
-                Vazco.setErrorMessage('header', error.reason);
-            } else {
-                alert(error.reason);
-            }
-        };
+        onErrorFn = UniCollection._showError;
     }
     this.upsert = function(){
         var self = this;
