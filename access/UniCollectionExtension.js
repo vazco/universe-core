@@ -169,7 +169,7 @@ if(Meteor.isServer){
             if (newAccess) {
                 diff = UniUtils.docDiff(oldDocument, newDocument);
                 pub.changed(this._name, newDocument._id, diff);
-                _doMapping(newDocument._id, newDocument, pub._uniMappings, pub._directSub||pub);
+                _doMapping(newDocument._id, newDocument, pub._uniMappings[this._name], pub._directSub||pub);
                 return true;
             }
         },
