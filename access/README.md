@@ -13,16 +13,34 @@ You can map UniCollection documents like as non-UniCollection documents.
 
 ```
 UniCollection.publish('example', function() {
-    this.setMappings([
+    this.setMappings(Colls.MyColl, [
+        //Map a value of organisationsIds from selected documents of Colls.MyColl to document from Colls.Rooms
         {
-            key: 'orgIds',
-            collection: Meteor.users,
-            reverse: true
+            key: 'organisationsIds',
+            collection: Colls.Rooms
+        },
+        //Map ids of selected document of Colls.MyColl to document from Meteor.users where orgIds = id
+        {
+                    key: 'orgIds',
+                    collection: Meteor.users,
+                    reverse: true // reverse direction of the relationship (inverse relationship is more complex)
         }
+    ]);
+    //For mapped users you can map another documents
+    this.setMappings(Meteor.users, [
+            {
+                key: 'organisationsIds',
+                collection: Colls.Rooms,
+                reverse: true
+
+            }
+    ]);
+    //And another....
+    this.setMappings(Colls.Rooms, [
         {
-                    key: 'organisationsIds',
-                    collection: Colls.Rooms,
-                    mappings: [{key: 'roomId', collection: Colls.Documents}]
+            key: 'roomId',
+            reverse:true,
+            collection: Colls.Documents
         }
     ]);
 
