@@ -54,7 +54,7 @@ it is assumed to be using the low-level added/changed/removed interface, and it 
 
 UniCollection.publish published all non-UniCollection documents
 and ONLY those documents, which have at least one rule fulfilled in {UniCollection}.allow 'publish' method and all non fulfilled rule in {UniCollection}.deny 'publish'.
-If you never set up any allow rules on a collection then all documents on the collection will be denied!
+IF YOU NEVER SET UP ANY PUBLISH METHOD IN ALLOW rules on a collection then all documents on the collection will be DENIED!
 
 ###Allow
 
