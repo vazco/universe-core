@@ -45,7 +45,7 @@ UniUtils = {
      get(obj, 'ipsum.dolorem.sit');  // undefined
      * @returns {*} found property or undefined if property doesn't exist.
      */
-    get: function (obj, prop) {
+    get: function (obj, prop, defaultValue) {
         if (!_.isObject(obj)) {
             throw new Error('Parameter object must be type of Object');
         }
@@ -58,21 +58,21 @@ UniUtils = {
         if (_.isArray(parts)) {
             last = parts.pop();
         } else {
-            if (_.has(obj, prop)) {
+            if (obj[prop]) {
                 return obj[prop];
             } else {
-                return;
+                return defaultValue;
             }
         }
 
         while (prop = parts.shift()) {
             obj = obj[prop];
             if (typeof obj !== 'object' || obj === null) {
-                return;
+                return defaultValue;
             }
         }
 
-        return (obj && obj[last] ? obj[last] : undefined);
+        return (obj && obj[last] ? obj[last] : defaultValue);
     },
 
     /**
@@ -82,8 +82,30 @@ UniUtils = {
      * @param prop
      * @returns {boolean}
      */
-    has: function (obj, prop) {
-        return _.isObject(obj) && !_.isUndefined(UniUtils.get(obj, prop));
+    has: function (obj, prop, hasOwnProperty) {
+        if (!_.isString(prop)) {
+            throw new Error('Parameter prop must be type of String');
+        }
+        var parts = prop.split('.');
+
+        if (_.isArray(parts)) {
+           var last = parts.pop();
+            while (prop = parts.shift()) {
+                obj = obj[prop];
+                if (typeof obj !== 'object' || obj === null) {
+                   return false;
+                }
+            }
+            if(hasOwnProperty){
+                return _.has(obj, last);
+            }
+            return !!(obj && obj[last]);
+        } else {
+            if(hasOwnProperty){
+                return _.has(obj, prop);
+            }
+            return !!(obj && obj[prop]);
+        }
     },
 
 
@@ -126,6 +148,26 @@ UniUtils = {
             user = UniUsers.findOne(user._id);
         }
         return user;
+    },
+    /**
+     * Compares documents and returns diff
+     * @param doc1 document will be compared against to document in doc2 parameter.
+     * @param doc2 against to.
+     * @returns {{}}
+     */
+    docDiff: function (doc1, doc2) {
+        var diff = {};
+        for (var k1 in doc1) {
+            if (!EJSON.equals(doc1[k1],doc2[k1])) {
+                diff[k1] = doc2[k1];
+            }
+        }
+        for (var k2 in doc2) {
+            if (!doc1[k2]) {
+                diff[k2] = doc2[k2];
+            }
+        }
+        return diff;
     },
     /**
      * Gets instance parent of current template it works everywhere where Template.instance() works

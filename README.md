@@ -4,6 +4,7 @@
 
 Universe Core is package providing simple database mapping. It is extending plain JS objects by adding common methods used in all projects.
 
+##Information about access control you can find here: [UniCollection.publish](access/README.md)
 ##Information about utilities you can find here: [UniUtils](utilities/README.md)
 
 ## How to use

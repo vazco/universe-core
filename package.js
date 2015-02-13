@@ -23,7 +23,8 @@ Package.on_use(function (api) {
         'collections/UniDoc.js',
         'collections/UniCollection.js',
         'collections/UniUser.js',
-        'collections/BasicSchema.js'
+        'collections/BasicSchema.js',
+        'access/UniCollectionExtension.js'
     ]);
 
     api.add_files(['utilities/SpacebarsHelpers.js'],['client']);
