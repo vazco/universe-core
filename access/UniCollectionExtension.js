@@ -123,15 +123,16 @@ if(Meteor.isServer){
 
     var _validateRules = function(userId, doc, publicationName){
         var publishValids = UniUtils.get(this, '_universeValidators.publish');
-        if(publishValids.deny){
-            if(_.some(publishValids.deny, function(fn){ return fn(userId, doc, publicationName);})){
-                return false;
+        if(publishValids){
+            if(publishValids.deny){
+                if(_.some(publishValids.deny, function(fn){ return fn(userId, doc, publicationName);})){
+                    return false;
+                }
+            }
+            if(publishValids.allow){
+                return _.some(publishValids.allow, function(fn){ return fn(userId, doc, publicationName);});
             }
         }
-        if(publishValids.allow){
-            return _.some(publishValids.allow, function(fn){ return fn(userId, doc, publicationName);});
-        }
-
         return false;
     };
 
