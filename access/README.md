@@ -2,9 +2,6 @@
 
 It allows to set a document level access/permission rules for publication
 
-## Quick start
-
-
 ###Publishing
 
 UniCollection.publish - Publish with Access control, this is the replacement of Meteor.publish.
