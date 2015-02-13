@@ -59,38 +59,35 @@ var _orgPublish = Meteor.publish;
  * @param options.is_auto auto publish without access control.
  * @returns {*}
  */
-UniCollection.publish = function(name, handler, options){
-    if(!options || !options.is_auto){
-        var newHandler = function(){
-            var sub = this;
-            this._directAdded = this.added;
-            this._directChanged = this.changed;
-            this._directRemoved = this.removed;
-            this._uniObserveHandles = [];
+UniCollection.publish = function(name, handler){
+    var newHandler = function(){
+        var sub = this;
+        this._directAdded = this.added;
+        this._directChanged = this.changed;
+        this._directRemoved = this.removed;
+        this._uniObserveHandles = [];
 
-            this.added = function(collectionName, id, doc){
-                return _runHandler('added', collectionName, id, doc, sub);
-            };
-            this.changed = function(collectionName, id, doc){
-                return _runHandler('changed', collectionName, id, doc, sub);
-            };
-            this.removed = function(collectionName, id, doc){
-                return _runHandler('removed', collectionName, id, doc, sub);
-            };
-            this.setMappings = function(mappings){
-                if(!_.isArray(mappings)){
-                    throw Meteor.Error(500, 'Parameter mappings must be an array of object');
-                }
-                this._uniMappings = mappings;
-            };
-            var curs = handler.apply(this, arguments);
-            if(curs){
-                _eachCursorsCheck(curs, this);
-            }
+        this.added = function(collectionName, id, doc){
+            return _runHandler('added', collectionName, id, doc, sub);
         };
-        return _orgPublish.call(this, name, newHandler, options);
-    }
-    return _orgPublish.apply(Meteor, name, arguments);
+        this.changed = function(collectionName, id, doc){
+            return _runHandler('changed', collectionName, id, doc, sub);
+        };
+        this.removed = function(collectionName, id, doc){
+            return _runHandler('removed', collectionName, id, doc, sub);
+        };
+        this.setMappings = function(mappings){
+            if(!_.isArray(mappings)){
+                throw Meteor.Error(500, 'Parameter mappings must be an array of object');
+            }
+            this._uniMappings = mappings;
+        };
+        var curs = handler.apply(this, arguments);
+        if(curs){
+            _eachCursorsCheck(curs, this);
+        }
+    };
+    return _orgPublish.call(this, name, newHandler);
 };
 
 var _addUniverseValidators = function(allowOrDeny, options) {
