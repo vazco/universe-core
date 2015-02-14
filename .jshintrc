@@ -44,7 +44,8 @@
         "UniCollection": true,
         "Vazco": true,
         "App": true,
-        "UniUI": true,
+        "UniUI": false,
+        "Mongo": false,
         "Colls": true
     }
 }

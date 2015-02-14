@@ -34,26 +34,28 @@ UniUsers.helpers = UniCollection.prototype.helpers;
 UniUsers.setConstructor(UniUser);
 
 // ----- Static methods -----
+if(Meteor.isClient){
+    UniUsers.getLoggedIn = function () {
+        return this.findOne(Meteor.userId());
+    };
 
-UniUsers.getLoggedIn = function () {
-    return this.findOne(Meteor.userId());
-};
+    UniUsers.getLoggedInId = function () {
+        return Meteor.userId();
+    };
 
-UniUsers.getLoggedInId = function () {
-    return Meteor.userId();
-};
+    UniUsers.isLoggedIn = function () {
+        return !!Meteor.userId();
+    };
 
-UniUsers.isLoggedIn = function () {
-    return !!Meteor.userId();
-};
+    UniUsers.isAdminLoggedIn = function () {
+        var user = UniUsers.getLoggedIn();
+        if(!user){
+            return false;
+        }
+        return user.isAdmin();
+    };
+}
 
-UniUsers.isAdminLoggedIn = function () {
-    var user = UniUsers.getLoggedIn();
-    if(!user){
-        return false;
-    }
-    return user.isAdmin();
-};
 
 /**
  * Checks if document belongs to this collection

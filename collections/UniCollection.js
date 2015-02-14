@@ -21,6 +21,7 @@ UniCollection = function () {
         return self;
     };
     this.setConstructor(constructor);
+    UniUtils.set(UniCollection, '_uniCollections.'+this._name, this);
 };
 
 var UniCollectionPrototype = function () {
