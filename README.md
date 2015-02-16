@@ -3,10 +3,6 @@
 ## About
 
 Universe Core is package providing simple database mapping. It is extending plain JS objects by adding common methods used in all projects.
-
-##Information about access control you can find here: [UniCollection.publish](access/README.md)
-##Information about utilities you can find here: [UniUtils](utilities/README.md)
-
 ## How to use
 
 ### Creating collection
@@ -24,7 +20,40 @@ use this:
  Colls.Books = new UniCollection('Books');
 ```
 
-###Basic use
+# Quickly about Universe Access & Mappings
+```
+UniCollection.publish('example', function() {
+    this.setMappings(Colls.MyColl, [
+        //Map a value of organisationsIds from selected documents of Colls.MyColl to document from Colls.Rooms
+        {
+            key: 'organisationsIds',
+            collection: Colls.Rooms
+        }
+    ]);
+    return Colls.MyColl.find();
+});
+
+Colls.Organisations.allow({
+    insert: function (userId){
+        return true;
+    },
+    update: function (userId, doc, fieldNames){
+        return true;
+    },
+    remove: function (userId, doc){
+        return true;
+    },
+    publish: function(userId, doc, publicationName){
+        return true;
+    }
+});
+```
+##Information about access control you can find here: [UniCollection.publish](access/README.md)
+
+##Information about utilities you can find here: [UniUtils](utilities/README.md)
+
+
+##Documents Methods
 
 You can use Collection.helpers method to register new methods to objects.
 
@@ -33,12 +62,17 @@ You can use Collection.helpers method to register new methods to objects.
 
 Colls.Books = new UniCollection('Books');
 
+//Adding methods to documents
 Colls.Books.helpers({
     read: function(){
         this.isReaded = true;
         this.save('isReaded');
     }
 });
+
+var book = Colls.Books.findOne();
+//All documents will be have before defined functions
+book.read();
 ```
 
 ###Users

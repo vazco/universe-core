@@ -11,10 +11,20 @@ UniUser.prototype.getName = function () {
         return this.profile.name;
     }
 };
-
-UniUser.prototype.isLoggedIn = function () {
-    return Meteor.userId() === this._id;
-};
+if(Meteor.isServer){
+    UniUser.prototype.isOnline = function () {
+        if(Meteor.isServer){
+            return _.chain(Meteor.server.sessions).pluck('userId')
+                .filter(function(v){return !!v;})
+                .contains(this._id).value();
+        }
+        return Meteor.userId() === this._id;
+    };
+} else {
+    UniUser.prototype.isLoggedIn = function () {
+        return Meteor.userId() === this._id;
+    };
+}
 
 UniUser.prototype.isAdmin = function () {
     return this.is_admin;
