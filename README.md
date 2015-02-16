@@ -33,7 +33,7 @@ UniCollection.publish('example', function() {
     return Colls.MyColl.find();
 });
 
-Colls.Organisations.allow({
+Colls.MyColl.allow({
     insert: function (userId){
         return true;
     },
