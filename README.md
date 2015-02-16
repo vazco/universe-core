@@ -54,9 +54,9 @@ Colls.MyColl.allow({
 });
 ```
 
-## Information about access control you can find here: [UniCollection.publish](access/README.md)
+### Information about access control you can find here: [UniCollection.publish](access/README.md)
 
-## Information about utilities you can find here: [UniUtils](utilities/README.md)
+### Information about utilities you can find here: [UniUtils](utilities/README.md)
 
 
 ## Documents Methods
@@ -85,7 +85,7 @@ book.read();
 
 Universe-core provides UniUsers object which is a copy of Meteor.users collection object that shares the same document with. It is just a simple hack to make sure that Meteor.users collection stay unmodiefied. Both operates on the same documents, only methods to access objects have changed.
 
-## API
+## Default Methods on Documents
 
 Default methods for all UniCollections documents (including UniUsers):
 
@@ -94,6 +94,8 @@ Default methods for all UniCollections documents (including UniUsers):
 ```doc.remove(cb)``` - removes current document.
 
 ```doc.findSelf()``` - returns current document from database. Useful for tracking reactive changes.
+
+```doc.getCollection()``` - returns collection to which current document belongs.
 
 
 
