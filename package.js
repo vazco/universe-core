@@ -11,6 +11,7 @@ Package.on_use(function (api) {
     api.use([
         'underscore@1.0.1',
         'accounts-base@1.1.2',
+        'mongo',
         'aldeed:simple-schema@1.0.3'
     ], ['client', 'server']);
 
