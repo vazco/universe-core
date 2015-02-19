@@ -153,8 +153,8 @@ Template.registerHelper('currentUserId', function() {
  * @memberof UIHelpers
  * @param {String} currentUserId - variable
  */
-Template.registerHelper('loggedIn', function() {
-    return UniUsers.loggedIn();
+Template.registerHelper('getLoggedIn', function() {
+    return UniUsers.getLoggedIn();
 });
 
 /**
@@ -163,7 +163,7 @@ Template.registerHelper('loggedIn', function() {
  * @memberof UIHelpers
  * @param {String} currentUserId - variable
  */
-Template.registerHelper('loggedInId', function() {
+Template.registerHelper('getLoggedInId', function() {
     return UniUsers.getLoggedInId();
 });
 
