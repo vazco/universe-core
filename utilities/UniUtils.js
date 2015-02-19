@@ -35,6 +35,7 @@ UniUtils = {
      * Returns nested property value.
      * @param obj
      * @param prop
+     * @param defaultValue {*=undefined}
      * @example var obj = {
         foo : {
             bar : 11
