@@ -65,7 +65,6 @@ var _addUniverseValidators = function(allowOrDeny, options) {
 };
 
 if(Meteor.isServer){
-    var _orgPublish = Meteor.publish;
 
     /**
      * Publish with Access control, this is the replacement of Meteor.publish.
@@ -116,7 +115,7 @@ if(Meteor.isServer){
                 _eachCursorsCheck(curs, this);
             }
         };
-        return _orgPublish.call(this, name, newHandler);
+        return Meteor.publish(name, newHandler);
     };
 
 
@@ -213,6 +212,7 @@ if(Meteor.isServer){
                 _directSub: directSub,
                 _uniMappings: directSub._uniMappings,
                 added: function(){
+                    debugger;
                     return directSub._directAdded.apply(this._directSub, arguments);
                 },
                 changed: function(){
@@ -229,7 +229,7 @@ if(Meteor.isServer){
         }
 
         if(_.contains(['added', 'changed'], handlerName)){
-            _doMapping(id, doc, directSub._uniMappings[collectionName], directSub);
+            _doMapping(id, doc, directSub._uniMappings[collectionName], directSub, collectionName);
         } else if(handlerName === 'removed'){
             _stopObserveHandlesAndCleanUp(directSub, id);
         }
@@ -243,12 +243,13 @@ if(Meteor.isServer){
         }
 
         if(curs.length) {
+            var _docIds;
             _.each(curs, function(cursor) {
                 if(!_.isObject(cursor) || !cursor.observeChanges){
                     throw Meteor.Error(500, 'Publish function can only return a Cursor or an array of Cursors');
                 }
                 var collName = cursor._getCollectionName();
-                var _docIds = [];
+                _docIds = [];
                 var observeHandle = cursor.observeChanges({
                     added: function (id, doc) {
                         _docIds.push(id);
@@ -262,10 +263,13 @@ if(Meteor.isServer){
                         sub.removed(collName, id);
                     }
                 });
-                sub.onStop(function () {observeHandle.stop(); observeHandle = null;});
+                sub.onStop(function () {observeHandle.stop();});
                 if(_parentDocId){
                     if(!sub._uniObserveHandles[_parentDocId]){
                         sub._uniObserveHandles[_parentDocId] = [];
+                    }
+                    if(!observeHandle){
+                        observeHandle = {};
                     }
                     observeHandle._docsIds = _docIds;
                     observeHandle._collectionName = collName;
@@ -317,7 +321,7 @@ if(Meteor.isServer){
         if(sub._uniObserveHandles[id] && sub._uniObserveHandles.length){
             _.each(sub._uniObserveHandles[id], function(h){
                 if(h){
-                    h.stop();
+                    h.stop && h.stop();
                     if(h._docIds){
                         _.each(h._docIds, function(_id){
                             if(sub._documents[h.collectionName] && sub._documents[h.collectionName][id]){

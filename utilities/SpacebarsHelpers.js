@@ -168,6 +168,17 @@ Template.registerHelper('getLoggedInId', function() {
 });
 
 /**
+ * Access for Colls variable to get helpers from collections
+ * Colls variable is the place where you can find all public collections of universe
+ * @function currentUserId
+ * @memberof UIHelpers
+ * @param {String} currentUserId - variable
+ */
+Template.registerHelper('Colls', function() {
+    return Colls;
+});
+
+/**
  * Concats strings
  * @function currentUserId
  * @memberof UIHelpers

@@ -1,5 +1,5 @@
 'use strict';
-
+var _userIdFromPublication;
 /* global UniUser: true */
 
 // ----- Prototype methods -----
@@ -11,20 +11,11 @@ UniUser.prototype.getName = function () {
         return this.profile.name;
     }
 };
-if(Meteor.isServer){
-    UniUser.prototype.isOnline = function () {
-        if(Meteor.isServer){
-            return _.chain(Meteor.server.sessions).pluck('userId')
-                .filter(function(v){return !!v;})
-                .contains(this._id).value();
-        }
-        return Meteor.userId() === this._id;
-    };
-} else {
-    UniUser.prototype.isLoggedIn = function () {
-        return Meteor.userId() === this._id;
-    };
-}
+
+UniUser.prototype.isLoggedIn = function () {
+    return UniUsers.getLoggedInId() === this._id;
+};
+
 
 UniUser.prototype.isAdmin = function () {
     return this.is_admin;
@@ -44,27 +35,43 @@ UniUsers.helpers = UniCollection.prototype.helpers;
 UniUsers.setConstructor(UniUser);
 
 // ----- Static methods -----
-if(Meteor.isClient){
-    UniUsers.getLoggedIn = function () {
-        return this.findOne(Meteor.userId());
-    };
 
-    UniUsers.getLoggedInId = function () {
-        return Meteor.userId();
-    };
+UniUsers.getLoggedInId = function () {
+    var userId;
 
-    UniUsers.isLoggedIn = function () {
-        return !!Meteor.userId();
-    };
+    if (Meteor.isClient) {
+        userId = Meteor.userId && Meteor.userId();
+    }
 
-    UniUsers.isAdminLoggedIn = function () {
-        var user = UniUsers.getLoggedIn();
-        if(!user){
-            return false;
+    if (Meteor.isServer) {
+        try {
+            userId = Meteor.userId && Meteor.userId();
+        } catch (e) {}
+
+        if (!userId) {
+            // Gets userId from publication.
+            userId = _userIdFromPublication.get();
         }
-        return user.isAdmin();
-    };
-}
+    }
+
+    return userId;
+};
+
+UniUsers.getLoggedIn = function () {
+    return this.findOne(this.getLoggedInId());
+};
+
+UniUsers.isLoggedIn = function () {
+    return !!this.getLoggedInId();
+};
+
+UniUsers.isAdminLoggedIn = function () {
+    var user = UniUsers.getLoggedIn();
+    if(!user){
+        return false;
+    }
+    return user.isAdmin();
+};
 
 
 /**
@@ -145,3 +152,18 @@ UniUsers.validators = {
         return true;
     }
 };
+
+
+
+if (Meteor.isServer) {
+    _userIdFromPublication = new Meteor.EnvironmentVariable();
+    var _publish = Meteor.publish;
+    Meteor.publish = function (name, func) {
+        return _publish.call(this, name, function () {
+            var context = this, args = arguments;
+            return _userIdFromPublication.withValue(context && context.userId, function () {
+                return func.apply(context, args);
+            });
+        });
+    };
+}
