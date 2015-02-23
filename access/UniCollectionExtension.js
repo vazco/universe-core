@@ -151,24 +151,24 @@ if(Meteor.isServer){
         },
         /**
          * Handle to notify publication about changed doc with checking access rules
-         * @param newDocument
+         * @param changedFields
          * @param pub 'this' from publication callback
          * @returns {boolean}
          */
-        changedHandler: function(newDocument, pub) {
-            var diff, newAccess;
-            var oldDocument = UniUtils.get(pub, '_documents.'+this._name+'.'+newDocument._id);
-            if(!oldDocument) {
-                return this.access.addedHandler.call(this, newDocument, pub);
+        changedHandler: function(changedFields, pub) {
+            var newAccess;
+            var hasOldDoc = UniUtils.get(pub, '_documents.'+this._name+'.'+changedFields._id);
+            var doc = this.findOne(changedFields._id);
+            if(!hasOldDoc) {
+                return this.access.addedHandler.call(this, doc, pub);
             }
-            newAccess = _validateRules.call(this, pub.userId, newDocument, pub._name);
+            newAccess = _validateRules.call(this, pub.userId, doc, pub._name);
             if (!newAccess) {
-                return this.access.removedHandler.call(this, newDocument, pub);
+                return this.access.removedHandler.call(this, changedFields, pub);
             }
             if (newAccess) {
-                diff = UniUtils.docDiff(oldDocument, newDocument);
-                pub.changed(this._name, newDocument._id, diff);
-                _doMapping(newDocument._id, newDocument, pub._uniMappings[this._name], pub._directSub||pub);
+                pub.changed(this._name, changedFields._id, changedFields);
+                _doMapping(changedFields._id, changedFields, pub._uniMappings[this._name], pub._directSub||pub);
                 return true;
             }
         },
@@ -251,12 +251,12 @@ if(Meteor.isServer){
                 var collName = cursor._getCollectionName();
                 _docIds = [];
                 var observeHandle = cursor.observeChanges({
-                    added: function (id, doc) {
+                    added: function (id, fields) {
                         _docIds.push(id);
-                        sub.added(collName, id, doc);
+                        sub.added(collName, id, fields);
                     },
-                    changed: function (id, doc) {
-                        sub.changed(collName, id, doc);
+                    changed: function (id, fields) {
+                        sub.changed(collName, id, fields);
                     },
                     removed: function (id) {
                         _docIds = _.without(_docIds, id);
@@ -323,9 +323,9 @@ if(Meteor.isServer){
                 if(h){
                     h.stop && h.stop();
                     if(h._docIds){
-                        _.each(h._docIds, function(_id){
+                        _.each(h._docIds, function(id){
                             if(sub._documents[h.collectionName] && sub._documents[h.collectionName][id]){
-                                sub.removed(h.collectionName, _id);
+                                sub.removed(h.collectionName, id);
                             }
                         });
                     }

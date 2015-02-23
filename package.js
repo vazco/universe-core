@@ -23,7 +23,7 @@ Package.on_use(function (api) {
         'utilities/UniConfig.js',
         'collections/UniDoc.js',
         'collections/UniCollection.js',
-        'collections/UniUser.js',
+        'collections/UniUsers.js',
         'collections/BasicSchema.js',
         'access/UniCollectionExtension.js'
     ]);
