@@ -323,9 +323,9 @@ if(Meteor.isServer){
                 if(h){
                     h.stop && h.stop();
                     if(h._docIds){
-                        _.each(h._docIds, function(id){
-                            if(sub._documents[h.collectionName] && sub._documents[h.collectionName][id]){
-                                sub.removed(h.collectionName, id);
+                        _.each(h._docIds, function(docId){
+                            if(sub._documents[h.collectionName] && sub._documents[h.collectionName][docId]){
+                                sub.removed(h.collectionName, docId);
                             }
                         });
                     }
