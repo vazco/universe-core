@@ -1,7 +1,7 @@
 Package.describe({
     summary: 'Universe CMS Core package',
     name: 'vazco:universe-core',
-    version: '1.2.4',
+    version: '1.2.5',
     git: 'https://github.com/vazco/universe-core.git'
 });
 
@@ -11,11 +11,12 @@ Package.on_use(function (api) {
     api.use([
         'underscore@1.0.1',
         'accounts-base@1.1.2',
-        'mongo',
-        'aldeed:simple-schema@1.0.3'
+        'mongo'
     ], ['client', 'server']);
 
-    api.use(['matb33:collection-hooks'], ['client', 'server'], {weak: true});
+    api.use(['aldeed:simple-schema@1.0.3'], ['client', 'server'], {weak: true});
+    api.use(['matb33:collection-hooks@0.7.9'], ['client', 'server'], {weak: true});
+
 
     api.add_files([
         'utilities/UniUtils.js',
