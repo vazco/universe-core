@@ -182,7 +182,11 @@ UniUtils = {
         if (!currentTemplateInstance) {
             currentTemplateInstance = Template.instance();
         }
-        var view = Template.instance().view;
+        if(!currentTemplateInstance){
+            console.error('Missing current instance of template!');
+            return;
+        }
+        var view = currentTemplateInstance.view;
         while (view && view.name !== templateName) {
             view = view.parentView;
         }

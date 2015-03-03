@@ -146,9 +146,6 @@ UniUsers.validators = {
         return false;
     },
     checkDisplayName: function (name) {
-        if (!name) {
-            throw new Meteor.Error(400, 'Name can not be blank.');
-        }
         return true;
     }
 };
