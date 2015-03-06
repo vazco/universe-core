@@ -46,8 +46,11 @@ UniUtils = {
      get(obj, 'ipsum.dolorem.sit');  // undefined
      * @returns {*} found property or undefined if property doesn't exist.
      */
-    get: function (obj, prop, defaultValue) {
+    get: function (obj, prop, defaultValue, isSilent) {
         if (!_.isObject(obj)) {
+            if (isSilent) {
+                return defaultValue;
+            }
             throw new Error('Parameter object must be type of Object');
         }
         if (!_.isString(prop)) {
