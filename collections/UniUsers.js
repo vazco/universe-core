@@ -12,6 +12,12 @@ UniUser.prototype.getName = function () {
     }
 };
 
+UniUser.prototype.getFirstEmailAddress = function () {
+    if (this.emails && this.emails.length) {
+        return UniUtils.get(this, 'emails.0.address')
+    }
+};
+
 UniUser.prototype.isLoggedIn = function () {
     return UniUsers.getLoggedInId() === this._id;
 };
