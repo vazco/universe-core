@@ -125,7 +125,7 @@ UniUsers.validators = {
         if (!username || username.length < 4) {
             throw new Meteor.Error(403, 'Username must have at least 4 characters');
         }
-        var usernamePattern = /^[a-z][a-z0-9_]+$/g;
+        var usernamePattern = /^[a-z][a-z0-9_\.]+$/g;
         if (!usernamePattern.test(username)) {
             throw new Meteor.Error(
                 403,
