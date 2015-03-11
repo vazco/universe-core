@@ -31,6 +31,8 @@ UniUser.prototype.isAdmin = function () {
 /* global UniUsers: true */
 UniUsers = Object.create(Meteor.users);
 
+UniUsers.UniUser = UniUser;
+
 UniUsers._getCollection = function(){
     return UniUsers;
 };

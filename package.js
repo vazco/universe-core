@@ -1,7 +1,7 @@
 Package.describe({
     summary: 'Universe CMS Core package',
     name: 'vazco:universe-core',
-    version: '1.2.7',
+    version: '1.3.0',
     git: 'https://github.com/vazco/universe-core.git'
 });
 
@@ -20,10 +20,11 @@ Package.on_use(function (api) {
 
     api.add_files([
         'utilities/UniUtils.js',
+        'utilities/UniUtilsStrings.js',
         'utilities/ProvidingGlobals.js',
         'utilities/UniConfig.js',
-        'collections/UniDoc.js',
         'collections/UniCollection.js',
+        'collections/UniDoc.js',
         'collections/UniUsers.js',
         'collections/BasicSchema.js',
         'access/UniCollectionExtension.js'

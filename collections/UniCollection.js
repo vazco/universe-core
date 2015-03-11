@@ -345,3 +345,14 @@ UniCollection.prototype.setDefaultSort = function(sort) {
         return self._orgFind(selector || {}, options);
     };
 };
+
+UniCollection.prototype.getDocument = function(id){
+    if(!id || !_.isString(id)){
+        throw Meteor.Error(404, 'Missing id!');
+    }
+    var doc = this.findOne(id);
+    if(!doc || !(doc instanceof UniCollection.UniDoc)){
+        throw Meteor.Error(404, 'Missing entry in collection '+this._name);
+    }
+    return doc;
+};

@@ -17,7 +17,7 @@ UniDoc.extend = function(){
     surrogate.prototype = UniDoc.prototype;
     /*jshint -W055 */
     UniverseDoc.prototype = new surrogate();
-    UniverseDoc.extend = UniDoc.extend;
+    UniverseDoc.extend = this.extend;
     return UniverseDoc;
 };
 /**
@@ -105,4 +105,4 @@ _([
     };
 });
 
-
+UniCollection.UniDoc = UniDoc;
