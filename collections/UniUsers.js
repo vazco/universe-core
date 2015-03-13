@@ -88,7 +88,9 @@ UniUsers.isAdminLoggedIn = function () {
  * @returns boolean
  */
 UniUsers.hasDocument = function(doc){
-    if(_.isString(doc)){
+    if(!doc){
+        return false;
+    } else if(_.isString(doc)){
         doc = UniUsers.findOne(doc);
     }
     return UniCollection.isDocumentFromCollection(doc, UniUsers._name);
