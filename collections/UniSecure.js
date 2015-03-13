@@ -1,7 +1,7 @@
 'use strict';
 
 UniUsers.getRestrictedFields = function(){
-    return ['is_Admin', 'permissions', '_id'];
+    return ['is_admin', 'permissions', '_id'];
 };
 
 var _checkIfContainsRestrictedFields = function(fieldNames){
