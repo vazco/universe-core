@@ -16,7 +16,7 @@ UniUsers.deny({
     update: function (userId, doc, fieldNames) {
         var user = UniUtils.getUniUserObject(userId, false);
         if(!UniUsers.hasDocument(user) || !user.isAdmin()){
-            return _checkIfContainsRestrictedFields();
+            return _checkIfContainsRestrictedFields(fieldNames);
         }
     }
 });
