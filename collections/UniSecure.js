@@ -5,11 +5,10 @@ UniUsers.getRestrictedFields = function(){
 };
 
 var _checkIfContainsRestrictedFields = function(fieldNames){
-    var foundFields = _.intersection(UniUsers.getRestrictedFields(), fieldNames);
-    if(_.isArray(foundFields) && foundFields.length){
-        return true;
-    }
-    return false;
+    fieldNames = _toLowerCase(fieldNames);
+    var restrictedFields =  _toLowerCase(UniUsers.getRestrictedFields());
+    var foundFields = _.intersection(restrictedFields, fieldNames);
+    return _.isArray(foundFields) && foundFields.length;
 };
 
 UniUsers.deny({
@@ -20,3 +19,9 @@ UniUsers.deny({
         }
     }
 });
+
+var _toLowerCase = function(fieldNames){
+    return _.map(fieldNames, function(f){
+        return f && (_.isString(f) ? f.toLowerCase(): f);
+    });
+};
