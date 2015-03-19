@@ -20,6 +20,10 @@ Template.registerHelper('routeIs', function (routeName, params, tmpl) {
 
 
 Template.registerHelper('formatDateMoment', function (v, format, tmpl) {
+    if(v === undefined){
+        console.warn('formatDateMoment: date argument is undefined');
+        return false;
+    }
     /* global moment: true */
     if (moment) {
         if (format && tmpl) {
