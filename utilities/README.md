@@ -43,6 +43,7 @@ UniUtils.getParentTemplateInstance - Gets instance parent of current template it
 
 ## UniConfig
 - provides a simple configuration mechanism.
+
 UniConfig provides on client side reactive method ready() (it's available on server too but always returns true)
 and hook `onReady()`, which calls passed callback only when config is ready.
 
