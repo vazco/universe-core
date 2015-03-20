@@ -4,14 +4,15 @@ var _configCollection = new Meteor.Collection('universe_configs');
 UniConfig = {
     public:{
         set: function(name, value, isServerWriteOnly){
-            if(_.isUndefined(value)){
-                return !!_configCollection.remove({name: name, access: 'public'});
-            }
             var row = {name: name, value:value, access: 'public', lastModified: new Date()};
-
             if(isServerWriteOnly){
                 row.isServerWriteOnly = isServerWriteOnly;
             }
+
+            if(Meteor.isClient){
+                return _set(row);
+            }
+
             return !!_configCollection.upsert(
                 {name: name, access: 'public'},
                 row
@@ -37,12 +38,18 @@ UniConfig = {
             if(!userId){
                 throw Meteor.Error(404, 'Missing userId');
             }
+            var row =  {name: name, value:value, access: userId, lastModified: new Date()};
+            if(Meteor.isClient) {
+                return _set(row);
+            }
+
             if(_.isUndefined(value)){
                 return !!_configCollection.remove({name: name, access: userId});
             }
+
             return !!_configCollection.upsert(
                 {name: name, access: userId},
-                {name: name, value:value, access: userId, lastModified: new Date()}
+                row
             );
         },
         get: function(name, defaultValue, userId){
@@ -59,13 +66,50 @@ UniConfig = {
             }
             return obj.value;
         },
-        getRow: function(name){
-            return _configCollection.findOne({name: name, access: 'public'});
+        getRow: function(name, userId){
+            return _configCollection.findOne({name: name, access: userId});
+        }
+    },
+    onReady: function(cb){
+        if(!_.isFunction(cb)){
+            throw new Meteor.Error(500, 'Function was expected but gets: '+ typeof cb);
+        }
+        if(Meteor.isServer){
+            cb.call(this);
+        } else{
+            var self = this;
+            Tracker.autorun(function(c){
+                if(UniConfig.ready()){
+                    cb.call(self);
+                    c.stop();
+                }
+            });
         }
     }
 };
 
+var _set = function(row){
+    UniConfig.onReady(function(){
+        var doc = _configCollection.findOne({name: row.name, access: row.access});
+        if(doc){
+            if(_.isUndefined(row.value)){
+                return !!_configCollection.remove({name: row.name, access: row.access});
+            }
+            _configCollection.update(
+                {_id: doc._id},
+                {$set: row}
+            );
+        } else {
+            _configCollection.insert(row);
+        }
+    });
+    return true;
+};
+
 if(Meteor.isServer){
+    UniConfig.ready = function(){
+        return true;
+    };
     UniConfig.private = {
         set: function (name, value) {
             if (_.isUndefined(value)) {
@@ -88,13 +132,14 @@ if(Meteor.isServer){
         }
     };
 
-    Meteor.publish(null, function () {
+    Meteor.publish('UniConfig', function () {
         var query = {access: 'public'};
         if(_.isString(this.userId) && this.userId !== 'private'){
             query = {$or:[query, {access: this.userId}]};
         }
         return _configCollection.find(query);
     });
+
     _configCollection._ensureIndex({name:1, access:1}, {unique: 1});
 
     var _checkRights = function(userId, doc){
@@ -115,4 +160,7 @@ if(Meteor.isServer){
         update: _checkRights,
         remove: _checkRights
     });
+} else{
+    var _handleSub = Meteor.subscribe('UniConfig');
+    UniConfig.ready = _handleSub.ready;
 }

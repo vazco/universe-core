@@ -41,4 +41,47 @@ UniUtils.getParentTemplateInstance - Gets instance parent of current template it
 @param {string} templateName Name of template
 ```
 
+## UniConfig provides a simple configuration mechanism.
+UniConfig provides on client side reactive method ready() (it's available on server too but always returns true)
+and hook `onReady()`, which calls passed callback only when config is ready.
+
+
+```
+UniConfig.onReady(function(){
+    if(this.public.get('myKey')){
+        //do something
+    }
+});
+```
+
+All types have methods get, set, getRow.
+But arguments for individual types can be different.
+
+**UniConfig.private** - this type of config is available ONLY on server side.
+
+```
+ .get (name, defaultValue)
+ .set (name, value)
+ .getRow (name)
+```
+
+**UniConfig.users** - this one is dedicated for users, it's available on both sides but on client it contains only stuff for logged in user.
+
+```
+.get (name, defaultValue, userId)
+.set (name, value, userId)
+.getRow (name, userId)
+
+* userId is needed only on server side
+```
+
+**UniConfig.public** - this type is available on both sides, every can change setting, unless it was added with true value passed as the third parameter of set method.
+
+```
+ .get (name, defaultValue)
+ .set (name, value, isServerWriteOnly)
+ .getRow (name)
+
+```
+
 ##And many more - check the source##
