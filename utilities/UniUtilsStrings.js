@@ -22,6 +22,23 @@ UniUtils.capitalizeFirst = function (string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
+/**
+ * Transform string into insensitive Regexp without flag i
+ * This can help you with searching in minimongo
+ * @param term {String}
+ * @returns {RegExp}
+ */
+UniUtils.getInSensitiveRegExpForTerm = function(term){
+    check(term, String);
+    term = _.map(term, function (v) {
+        var n = v.toLowerCase();
+        n += v.toUpperCase();
+        return '[' + n + ']';
+    });
+    term = term.join('');
+    return new RegExp(term);
+};
+
 
 /**
  * Generates random string hash
