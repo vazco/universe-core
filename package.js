@@ -1,7 +1,7 @@
 Package.describe({
-    summary: 'Universe CMS Core package',
+    summary: 'Contains collection on steroids. ( Access / DocHelpers / User Helpers ) Many awesome utilities',
     name: 'vazco:universe-core',
-    version: '1.4.1',
+    version: '1.4.2',
     git: 'https://github.com/vazco/universe-core.git'
 });
 
