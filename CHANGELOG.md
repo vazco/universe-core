@@ -3,7 +3,7 @@
 - Removed deprecated globals UniDoc,UniUser (They are: UniCollection.UniDoc and UniUsers.UniUser)
 - Remove weak dependency to Simple Schema
 - Mappings mechanism in Universe Access still are in beta version
-- Added changelog is a repository witch is mandatory to fill for all contributors
+- Added changelog, which is mandatory to fill for all contributors
 - Dependency updated: matb33:collection-hooks v.0.7.11
 - Moved update operators on document to package `vazco:universe-update-operators-on-document`
 
