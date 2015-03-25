@@ -1,7 +1,7 @@
 Package.describe({
     summary: 'Contains collection on steroids. ( Access / DocHelpers / User Helpers ) Many awesome utilities',
     name: 'vazco:universe-core',
-    version: '1.4.3',
+    version: '1.5.0',
     git: 'https://github.com/vazco/universe-core.git'
 });
 
@@ -9,13 +9,12 @@ Package.on_use(function (api) {
     api.versionsFrom(['METEOR@1.0']);
     api.use(['templating', 'ui', 'blaze'], 'client');
     api.use([
-        'underscore@1.0.1',
+        'underscore@1.0.3',
         'accounts-base@1.1.2',
         'mongo'
     ], ['client', 'server']);
 
-    api.use(['aldeed:simple-schema@1.0.3'], ['client', 'server'], {weak: true});
-    api.use(['matb33:collection-hooks@0.7.9'], ['client', 'server'], {weak: true});
+    api.use(['matb33:collection-hooks@0.7.11'], ['client', 'server'], {weak: true});
 
 
     api.add_files([
@@ -39,7 +38,6 @@ Package.on_use(function (api) {
         'UniCollection',
         'UniDoc',
         'UniUsers',
-        'UniUser',
         'Vazco',
         'Colls',
         'App'

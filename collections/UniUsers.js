@@ -4,7 +4,7 @@ var _userIdFromPublication;
 
 // ----- Prototype methods -----
 
-UniUser = UniDoc.extend();
+var UniUser = UniCollection.UniDoc.extend();
 
 UniUser.prototype.getName = function () {
     if (this.profile) {

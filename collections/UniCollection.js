@@ -99,7 +99,7 @@ UniCollection.prototype.getFieldOptionsFromSchema = function (fieldName) {
             console.error('Missing field in the schema, field name: "' + fieldName + '"');
             return;
         }
-        var options = Vazco.get(field, 'autoform.options');
+        var options = UniUtils.get(field, 'autoform.options');
         if (_.isArray(options)) {
             return options;
         } else {
