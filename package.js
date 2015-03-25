@@ -36,7 +36,6 @@ Package.on_use(function (api) {
         'UniUtils',
         'UniConfig',
         'UniCollection',
-        'UniDoc',
         'UniUsers',
         'Vazco',
         'Colls',
