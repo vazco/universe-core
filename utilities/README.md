@@ -65,7 +65,10 @@ But arguments for individual types can be different.
  .get (name, defaultValue)
  .set (name, value)
  .getRow (name)
+ .runOnce(name, function)
 ```
+UniConfig.private.runOnce - call function only once and save date about this in private config,
+but if function threw error or returned false. function will be not check as executed. 
 
 **UniConfig.users** - this one is dedicated for users, it's available on both sides but on client it contains only stuff for logged in user.
 

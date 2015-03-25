@@ -127,8 +127,23 @@ if(Meteor.isServer){
             }
             return obj.value;
         },
-        getRow: function(name){
+        getRow: function (name) {
             return _configCollection.findOne({name: name, access: 'public'});
+        },
+        runOnce: function (name, callback) {
+            if (!UniConfig.private.get('runOne_' + name)) {
+                var result;
+                try {
+                    result = callback();
+                } catch (e) {
+                    console.error(e);
+                    return;
+                }
+                if (result !== false) {
+                    UniConfig.private.set('runOne_' + name, new Date());
+                }
+                console.log('Running once:', name, 'status: '+((result !== false)?'ok':'failed'));
+            }
         }
     };
 
