@@ -38,6 +38,7 @@ use this:
     UniDoc is a default of document constructor.
 
 
+
 - `helpers(objectWithMethods)`
 
        Using this method you can add new helpers function into document prototype.
@@ -47,9 +48,11 @@ use this:
        All of this methods will be added to returned document by function find, findOne
 
 
+
 - `hasDocument(docOrId)`
 
     Checks if document belongs to this collection
+
 
 
 - `addErrorSupportToUpdates(onErrorFn)`
@@ -65,6 +68,7 @@ use this:
       (You can override this logic by replacing UniCollection._showError)
 
 
+
 - `addErrorSupportToInserts(onErrorFn)`
 
       Adds error support for all inserts on client side
@@ -72,9 +76,11 @@ use this:
       It works like addErrorSupportToUpdates
 
 
+
 - `addErrorSupportToRemoves(onErrorFn)`
 
        Adds error support for all removes on client side
+
 
 
 - `addErrorSupportToUpserts(onErrorFn)`
@@ -82,11 +88,13 @@ use this:
        It works like addErrorSupportToUpdates
 
 
+
 - `addErrorSupportToAllWriteMethods(onErrorFn)`
 
     Adds error callback to each one write methods
 
     param onErrorFn (optional) If is not passed then UniUI.setErrorMessage
+
 
 
 - `setDefaultSort(options)`
@@ -149,6 +157,7 @@ Inheritance takes place by  calling extend() method on other UniDoc object
     prepare copy of prototype UniDoc, to separate your future methods from base UniDoc
 
 
+
 - `update(modifier, options, cb)`
 
     Performs update on current document
@@ -158,21 +167,30 @@ Inheritance takes place by  calling extend() method on other UniDoc object
     (which is an id of current document)
 
 
+
 - `remove(options, cb)`
 
     Performs remove on current document
+
+
 
 - `save(fieldsList)`
 
     Saves selected keys in current document
 
+
+
 - `refresh()`
 
     refind doc and refresh fields in current document
 
+
+
 - `findSelf()`
 
     returns fresh instance of current document
+
+
 
 - `getCollection()`
     returns collection to which current document belongs.
