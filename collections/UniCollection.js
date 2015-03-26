@@ -14,7 +14,7 @@ UniCollection = function () {
         }
         constructor = args[1].docConstructor;
     } else {
-        constructor = UniDoc.extend();
+        constructor = UniCollection.UniDoc.extend();
     }
 
     this._getCollection = function () {

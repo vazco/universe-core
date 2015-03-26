@@ -1,6 +1,5 @@
 'use strict';
 var _userIdFromPublication;
-/* global UniUser: true */
 
 // ----- Prototype methods -----
 

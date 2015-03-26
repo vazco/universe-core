@@ -1,8 +1,6 @@
 'use strict';
 
-/* global UniDoc: true */
-
-UniDoc = function (doc) {
+var UniDoc = function (doc) {
     return _.extend(this, doc);
 };
 
