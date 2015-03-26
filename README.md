@@ -227,9 +227,9 @@ Colls.MyColl.allow({
 });
 ```
 
-### Information about access control you can find here: [UniCollection.publish](access/README.md)
+### Information about access control you can find here: [UniCollection.publish](https://github.com/vazco/meteor-universe-access)
 
-### Information about utilities you can find here: [UniUtils](utilities/README.md)
+### Information about utilities you can find here: [UniUtils](https://github.com/vazco/meteor-universe-utilities)
 
 
 ## UniUsers
@@ -269,9 +269,11 @@ Meteor.users collection stay unmodiefied. Both operates on the same documents, o
 
 - `UniUsers.setNewPermissionType(permissionName, description`
 
-   Add new permission type (You must add new permission typ on server and client side)
+   Add new permission type (Must be called on both sides client&server)
 
-   Each permission adds to user prototype new method like `user.hasPermissionOf<permissionName>()`
+   Each permission adds to user prototype new method like `user.getPermission<PermissionName>()`
+
+   **example:** `getPermissionModerator`
 
    which is an helper to checking current permission state
 
