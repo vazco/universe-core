@@ -1,7 +1,7 @@
 Package.describe({
     summary: 'Contains collection on steroids. ( access / doc helpers / user helpers ) Many awesome utilities',
     name: 'vazco:universe-core',
-    version: '1.6.0',
+    version: '1.6.1',
     git: 'https://github.com/vazco/universe-core.git'
 });
 
