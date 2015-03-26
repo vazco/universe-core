@@ -36,7 +36,7 @@ UniCollection.prototype = new UniCollectionPrototype();
  * to transform selected documents before the method (like: find, findOne) returns them.
  * UniDoc is a default of document constructor.
  * A good way is inheritance of UniDoc, instead create new constructor
- * @param docConstructor transformation function
+ * @param docConstructor transformation Object
  * @see UniDoc
  */
 UniCollection.prototype.setConstructor = function (docConstructor) {
@@ -130,7 +130,7 @@ UniCollection._showError = function(text){
  * Adds error support for all updates on client side, even if callback for update wasn't provided.
  * When update is unsuccessful function 'onErrorFn' will be called
  * @param {function=} onErrorFn (optional) If is not passed then Vazco.setErrorMessage for 'header' place will be called
- * or alert if Vazco.setErrorMessage is missing
+ * or alert if Vazco.setErrorMessage is missing (You can override this logic by replacing UniCollection._showError)
  */
 UniCollection.prototype.addErrorSupportToUpdates = function(onErrorFn){
     if(Meteor.isServer){
@@ -175,7 +175,7 @@ UniCollection.prototype.addErrorSupportToUpdates = function(onErrorFn){
  * Adds error support for all inserts on client side, even if callback for update wasn't provided.
  * When update is unsuccessful function 'onErrorFn' will be called
  * @param {function=} onErrorFn (optional) If is not passed then Vazco.setErrorMessage for 'header' place will be called
- * or alert if Vazco.setErrorMessage is missing
+ * or alert if Vazco.setErrorMessage is missing (You can override this logic by replacing UniCollection._showError)
  */
 UniCollection.prototype.addErrorSupportToInserts = function(onErrorFn){
     if(Meteor.isServer){
@@ -220,7 +220,7 @@ UniCollection.prototype.addErrorSupportToInserts = function(onErrorFn){
  * Adds error support for all removes on client side, even if callback for update wasn't provided.
  * When update is unsuccessful function 'onErrorFn' will be called
  * @param {function=} onErrorFn (optional) If is not passed then Vazco.setErrorMessage for 'header' place will be called
- * or alert if Vazco.setErrorMessage is missing
+ * or alert if Vazco.setErrorMessage is missing (You can override this logic by replacing UniCollection._showError)
  */
 UniCollection.prototype.addErrorSupportToRemoves = function(onErrorFn){
     if(Meteor.isServer){
@@ -262,7 +262,7 @@ UniCollection.prototype.addErrorSupportToRemoves = function(onErrorFn){
 };
 
 /**
- * Adds error support for all removes on client side, even if callback for update wasn't provided.
+ * Adds error support for all upserts on client side, even if callback for update wasn't provided.
  * When update is unsuccessful function 'onErrorFn' will be called
  * @param {function=} onErrorFn (optional) If is not passed then Vazco.setErrorMessage for 'header' place will be called
  * or alert if Vazco.setErrorMessage is missing

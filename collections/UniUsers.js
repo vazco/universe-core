@@ -27,6 +27,17 @@ UniUser.prototype.isAdmin = function () {
     return this.is_admin;
 };
 
+if(Meteor.isServer){
+  UniUser.prototype.setPermission = function (name, value) {
+    if(!_.isString(name) && !_.isUndefined(UniUsers.availablePermissions[name])){
+      throw new Meteor.Error(404, 'Permission unknown! ' +name);
+    }
+    var toSet = {};
+    toSet['permissions.'+name] = value;
+    return this.update({$set: toSet});
+  };
+}
+
 // ----- Collection clone -----
 /* global UniUsers: true */
 UniUsers = Object.create(Meteor.users);
@@ -106,15 +117,17 @@ var _availablePermissions = {};
  * @param description
  */
 UniUsers.setNewPermissionType = function (permissionName, description) {
+    check(permissionName, String);
     _availablePermissions[permissionName] = description;
     var fnName = permissionName.charAt(0).toUpperCase() + permissionName.slice(1);
     UniUser.prototype['hasPermissionOf'+fnName] = function(){
-        if (this.permissions && this.permissions[permissionName] === true) {
-            return true;
+        if (this.permissions) {
+            return this.permissions[permissionName];
         }
         return false;
     };
 };
+
 /**
  * Return an object of key/value pairs, like:  {permissionName: "Permission Description", ....}
  * Do this in a file accessible by both the server and client.
