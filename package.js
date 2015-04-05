@@ -8,8 +8,8 @@ Package.describe({
 Package.on_use(function (api) {
     api.versionsFrom(['METEOR@1.0.4']);
     var implyPackages = [
-        'vazco:universe-utilities@1.0.4',
-        'vazco:universe-collection@1.0.6',
+        'vazco:universe-utilities@1.0.6',
+        'vazco:universe-collection@1.1.0',
         'vazco:universe-access@1.1.3'
     ];
     api.use(implyPackages);

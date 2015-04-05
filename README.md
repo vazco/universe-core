@@ -298,3 +298,9 @@ Setting new permission for user you can set only on server side, by method on un
      (You can override this method in `UniUsers.UniUse` and checks something else)
 
 -    `setPermission(name, value)` sets permission on current user (is available on server)
+
+
+### Check other amazing universe packages:
+
+- [Atmosphere js](https://atmospherejs.com/?q=vazco%3Auniverse)
+- [Github](https://github.com/search?l=JavaScript&q=meteor-universe&type=Repositories&utf8=%E2%9C%93)
