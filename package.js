@@ -8,10 +8,14 @@ Package.describe({
 Package.onUse(function (api) {
     api.versionsFrom(['METEOR@1.0.4']);
     var implyPackages = [
-        'vazco:universe-utilities@1.1.2',
-        'vazco:universe-collection@1.2.4',
-        'vazco:universe-access@1.1.5'
+        'universe:utilities',
+        'universe:utilities-blaze',
+        'universe:collection'
     ];
     api.use(implyPackages);
+    api.addFiles('deprecated.js');
     api.imply(implyPackages);
+    api.export('Vazco');
+    api.export('App');
+    api.export('Colls');
 });
