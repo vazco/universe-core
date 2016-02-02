@@ -14,8 +14,8 @@ UniCollection.prototype.getFieldOptionsFromSchema = function (fieldName) {
         throw new Meteor.Error('Simple Schema is not attached on this collection!');
     }
     var schema = this.getSchema() || UniUtils.get(this, '_c2._simpleSchema');
-    
-    if (_.isString(fieldName)) {
+
+    if (_.isString(fieldName) && schema) {
         var field = _.isFunction(schema.schema) ? schema.schema(fieldName) : schema[fieldName];
         if (!field) {
             console.error('Missing field in the schema, field name: "' + fieldName + '" collection:' + this.getCollectionName());
