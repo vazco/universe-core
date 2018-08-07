@@ -1,7 +1,12 @@
-## Abandonware
+<h1 align="center">
+    <a href="https://github.com/vazco">vazco</a>/Universe Core
+</h1>
 
+&nbsp;
 
-# Universe Core
+<h3 align="center">
+  -- Abandonware. This package is deprecated! --
+</h3>
 
 ## About
 
@@ -307,3 +312,9 @@ Setting new permission for user you can set only on server side, by method on un
 
 - [Atmosphere js](https://atmospherejs.com/?q=vazco%3Auniverse)
 - [Github](https://github.com/search?l=JavaScript&q=meteor-universe&type=Repositories&utf8=%E2%9C%93)
+
+### License
+
+<img src="https://vazco.eu/banner.png" align="right">
+
+**Like every package maintained by [Vazco](https://vazco.eu/), Universe Core is [MIT licensed](https://github.com/vazco/uniforms/blob/master/LICENSE).**
